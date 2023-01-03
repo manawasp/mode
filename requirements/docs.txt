@@ -1,6 +1,6 @@
 -r default.txt
 six
-sphinx
+sphinx<6.0.0
 sphinx_celery>=1.4.8
 sphinx-autodoc-annotation
 alabaster
