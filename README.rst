@@ -13,7 +13,7 @@
 Why the fork
 ============
 
-We have decided to fork the original *Mode* project because there is a critical process of releasing new versions which causes uncertainty in the community. Everybody is welcome to contribute to this *fork*, and you can be added as a manitainer.
+We have decided to fork the original *Mode* project because there is a critical process of releasing new versions which causes uncertainty in the community. Everybody is welcome to contribute to this *fork*, and you can be added as a maintainer.
 
 We want to:
 
@@ -33,7 +33,9 @@ it much easier to use.
 In Mode your program is built out of services that you can start, stop,
 restart and supervise.
 
-A service is just a class::
+A service is just a class:
+
+.. code-block:: python
 
     class PageViewCache(Service):
         redis: Redis = None
@@ -51,7 +53,9 @@ A service is just a class::
 Services are started, stopped and restarted and have
 callbacks for those actions.
 
-It can start another service::
+It can start another service:
+
+.. code-block:: python
 
     class App(Service):
         page_view_cache: PageViewCache = None
@@ -63,7 +67,9 @@ It can start another service::
         def page_view_cache(self) -> PageViewCache:
             return PageViewCache()
 
-It can include background tasks::
+It can include background tasks:
+
+.. code-block:: python
 
     class PageViewCache(Service):
 
@@ -78,7 +84,9 @@ Worker
     Mode optionally provides a worker that you can use to start the program,
     with support for logging, blocking detection, remote debugging and more.
 
-    To start a worker add this to your program::
+    To start a worker add this to your program:
+
+    .. code-block:: python
 
         if __name__ == '__main__':
             from mode import Worker
@@ -86,7 +94,7 @@ Worker
 
     Then execute your program to start the worker:
 
-    .. sourcecode:: console
+    .. code-block:: console
 
         $ python examples/tutorial.py
         [2018-03-27 15:47:12,159: INFO]: [^Worker]: Starting...
@@ -101,7 +109,7 @@ Worker
 
     To stop it hit ``Control-c``:
 
-    .. sourcecode:: console
+    .. code-block:: console
 
         [2018-03-27 15:55:08,084: INFO]: [^Worker]: Stopping on signal received...
         [2018-03-27 15:55:08,084: INFO]: [^Worker]: Stopping...
@@ -133,12 +141,14 @@ Beacons
     This requires you to have the ``pydot`` library and GraphViz
     installed:
 
-    .. sourcecode:: console
+    .. code-block:: console
 
         $ pip install pydot
 
     Let's change the app service class to dump the graph to an image
-    at startup::
+    at startup:
+
+    .. code-block:: python
 
         class AppService(Service):
 
@@ -159,7 +169,10 @@ Creating a Service
 ==================
 
 To define a service, simply subclass and fill in the methods
-to do stuff as the service is started/stopped etc.::
+to do stuff as the service is started/stopped etc.:
+
+
+.. code-block:: python
 
     class MyService(Service):
 
@@ -172,12 +185,16 @@ to do stuff as the service is started/stopped etc.::
         async def on_stop(self) -> None:
             print('Im stopping now')
 
-To start the service, call ``await service.start()``::
+To start the service, call ``await service.start()``:
+
+.. code-block:: python
 
     await service.start()
 
 Or you can use ``mode.Worker`` (or a subclass of this) to start your
-services-based asyncio program from the console::
+services-based asyncio program from the console:
+
+.. code-block:: python
 
     if __name__ == '__main__':
         import mode
@@ -194,14 +211,18 @@ It's a Graph!
 
 Services can start other services, coroutines, and background tasks.
 
-1) Starting other services using ``add_depenency``::
+1) Starting other services using ``add_depenency``:
+
+.. code-block:: python
 
     class MyService(Service):
 
         def __post_init__(self) -> None:
-           self.add_dependency(OtherService(loop=self.loop))
+        self.add_dependency(OtherService(loop=self.loop))
 
-2) Start a list of services using ``on_init_dependencies``::
+2) Start a list of services using ``on_init_dependencies``:
+
+.. code-block:: python
 
     class MyService(Service):
 
@@ -212,7 +233,9 @@ Services can start other services, coroutines, and background tasks.
                 ServiceC(loop=self.loop),
             ]
 
-3) Start a future/coroutine (that will be waited on to complete on stop)::
+3) Start a future/coroutine (that will be waited on to complete on stop):
+
+.. code-block:: python
 
     class MyService(Service):
 
@@ -222,7 +245,9 @@ Services can start other services, coroutines, and background tasks.
         async def my_coro(self) -> None:
             print('Executing coroutine')
 
-4) Start a background task::
+4) Start a background task:
+
+.. code-block:: python
 
     class MyService(Service):
 
@@ -231,7 +256,9 @@ Services can start other services, coroutines, and background tasks.
             print('Executing coroutine')
 
 
-5) Start a background task that keeps running::
+5) Start a background task that keeps running:
+
+.. code-block:: python
 
     class MyService(Service):
 
@@ -251,7 +278,9 @@ Installation
 You can install Mode either via the Python Package Index (PyPI)
 or from source.
 
-To install using `pip`::
+To install using `pip`:
+
+.. code-block:: console
 
     $ pip install -U mode-streaming
 
@@ -263,12 +292,14 @@ Downloading and installing from source
 Download the latest version of Mode from
 http://pypi.org/project/mode-streaming
 
-You can install it by doing the following::
+You can install it by doing the following:
 
-    $ tar xvfz mode-streaming-0.2.1.tar.gz
-    $ cd mode-0.2.1
-    $ python setup.py build
-    # python setup.py install
+    .. code-block:: console
+
+        $ tar xvfz mode-streaming-0.2.1.tar.gz
+        $ cd mode-0.2.1
+        $ python setup.py build
+        # python setup.py install
 
 The last command must be executed as a privileged user if
 you are not currently using a virtualenv.
@@ -282,7 +313,9 @@ With pip
 ~~~~~~~~
 
 You can install the latest snapshot of Mode using the following
-pip command::
+pip command:
+
+.. code-block:: console
 
     $ pip install mode-streaming
 
@@ -302,13 +335,15 @@ This works with any blocking Python library that can work with gevent.
 Using gevent requires you to install the ``aiogevent`` module,
 and you can install this as a bundle with Mode:
 
-.. sourcecode:: console
+.. code-block:: console
 
     $ pip install -U mode-streaming[gevent]
 
 Then to actually use gevent as the event loop you have to
 execute the following in your entrypoint module (usually where you
-start the worker), before any other third party libraries are imported::
+start the worker), before any other third party libraries are imported:
+
+.. code-block:: python
 
     #!/usr/bin/env python3
     import mode.loop
@@ -327,13 +362,15 @@ This works with any blocking Python library that can work with eventlet.
 Using eventlet requires you to install the ``aioeventlet`` module,
 and you can install this as a bundle with Mode:
 
-.. sourcecode:: console
+.. code-block:: console
 
     $ pip install -U mode-streaming[eventlet]
 
 Then to actually use eventlet as the event loop you have to
 execute the following in your entrypoint module (usually where you
-start the worker), before any other third party libraries are imported::
+start the worker), before any other third party libraries are imported:
+
+.. code-block:: python
 
     #!/usr/bin/env python3
     import mode.loop
@@ -365,13 +402,17 @@ Here are some of the steps required to accomplish this:
 
 - Source code transformation to rewrite variable annotations to comments
 
-  for example, the code::
+    for example, the code:
+
+    .. code-block:: python
 
         class Point:
             x: int = 0
             y: int = 0
 
-   must be rewritten into::
+    must be rewritten into:
+
+    .. code-block:: python
 
         class Point:
             x = 0  # type: int
@@ -379,12 +420,16 @@ Here are some of the steps required to accomplish this:
 
 - Source code transformation to rewrite async functions
 
-    for example, the code::
+    for example, the code:
+
+    .. code-block:: python
 
         async def foo():
             await asyncio.sleep(1.0)
 
-    must be rewritten into::
+    must be rewritten into:
+
+    .. code-block:: python
 
         @coroutine
         def foo():
@@ -402,7 +447,7 @@ At Shutdown I get lots of warnings, what is this about?
 
 If you get warnings such as this at shutdown:
 
-.. sourcecode:: text
+.. code-block:: text
 
     Task was destroyed but it is pending!
     task: <Task pending coro=<Service._execute_task() running at /opt/devel/mode/mode/services.py:643> wait_for=<Future pending cb=[<TaskWakeupMethWrapper object at 0x1100a7468>()]>>
