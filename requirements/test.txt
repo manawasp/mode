@@ -4,7 +4,7 @@ mock; python_version<'3.8'  # backport that contains AsyncMock class, includes m
 hypothesis>=3.31
 freezegun>=0.3.11
 pytest-aiofiles>=0.2.0
-pytest-asyncio>=0.8
+pytest-asyncio==0.21.1
 pytest-base-url>=1.4.1
 pytest-forked
 pytest-openfiles>=0.2.0
