@@ -18,11 +18,11 @@ classes = """
     Development Status :: 5 - Production/Stable
     License :: OSI Approved :: BSD License
     Programming Language :: Python :: 3 :: Only
-    Programming Language :: Python :: 3.7
     Programming Language :: Python :: 3.8
     Programming Language :: Python :: 3.9
     Programming Language :: Python :: 3.10
     Programming Language :: Python :: 3.11
+    Programming Language :: Python :: 3.12
     Operating System :: POSIX
     Operating System :: Microsoft :: Windows
     Operating System :: MacOS :: MacOS X
@@ -129,7 +129,7 @@ setup(
     install_requires=reqs("default.txt"),
     tests_require=reqs("test.txt"),
     extras_require=extras_require(),
-    python_requires=">=3.7",
+    python_requires=">=3.8",
     classifiers=classifiers,
     long_description=long_description,
     long_description_content_type="text/x-rst",
