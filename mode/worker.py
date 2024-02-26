@@ -53,11 +53,13 @@ class _TupleAsListRepr(reprlib.Repr):
 
 
 # this repr formats tuples as if they are lists.
-_repr = _TupleAsListRepr().repr  # noqa: E305
+_repr = _TupleAsListRepr().repr
 
 
 @contextmanager
-def exiting(*, print_exception: bool = False, file: IO = sys.stderr) -> Iterator[None]:
+def exiting(
+    *, print_exception: bool = False, file: IO = sys.stderr
+) -> Iterator[None]:
     try:
         yield
     except MemoryError:
@@ -105,17 +107,17 @@ class Worker(Service):
         *services: ServiceT,
         debug: bool = False,
         quiet: bool = False,
-        logging_config: Dict = None,
-        loglevel: Union[str, int] = None,
-        logfile: Union[str, IO] = None,
+        logging_config: Optional[Dict] = None,
+        loglevel: Optional[Union[str, int]] = None,
+        logfile: Optional[Union[str, IO]] = None,
         redirect_stdouts: bool = True,
         redirect_stdouts_level: logging.Severity = None,
         stdout: Optional[IO] = sys.stdout,
         stderr: Optional[IO] = sys.stderr,
         console_port: int = 50101,
-        loghandlers: List[Handler] = None,
+        loghandlers: Optional[List[Handler]] = None,
         blocking_timeout: Seconds = 10.0,
-        loop: asyncio.AbstractEventLoop = None,
+        loop: Optional[asyncio.AbstractEventLoop] = None,
         override_logging: bool = True,
         daemon: bool = True,
         **kwargs: Any,
@@ -153,12 +155,16 @@ class Worker(Service):
         self._say(msg, file=self.stderr)
 
     def _say(
-        self, msg: str, file: Optional[IO] = None, end: str = "\n", **kwargs: Any
+        self,
+        msg: str,
+        file: Optional[IO] = None,
+        end: str = "\n",
+        **kwargs: Any,
     ) -> None:
         if file is None:
             file = self.stdout
         if not self.quiet:
-            print(msg, file=file, end=end, **kwargs)  # noqa: T003
+            print(msg, file=file, end=end, **kwargs)
 
     def on_init_dependencies(self) -> Iterable[ServiceT]:
         return self.services
@@ -174,7 +180,8 @@ class Worker(Service):
             await self._add_monitor()
         self.install_signal_handlers()
 
-    async def on_execute(self) -> None: ...
+    async def on_execute(self) -> None:
+        ...
 
     def _setup_logging(self) -> None:
         _loglevel: int = 0
@@ -199,9 +206,12 @@ class Worker(Service):
             self._redirect_stdouts()
 
     def _redirect_stdouts(self) -> None:
-        self.add_context(logging.redirect_stdouts(severity=self.redirect_stdouts_level))
+        self.add_context(
+            logging.redirect_stdouts(severity=self.redirect_stdouts_level)
+        )
 
-    def on_setup_root_logger(self, logger: Logger, level: int) -> None: ...
+    def on_setup_root_logger(self, logger: Logger, level: int) -> None:
+        ...
 
     async def maybe_start_blockdetection(self) -> None:
         if self.debug:
@@ -243,9 +253,9 @@ class Worker(Service):
 
     def _enter_debugger(self) -> None:
         self.carp("Starting debugger...")
-        import pdb  # noqa: T100
+        import pdb
 
-        pdb.set_trace()  # noqa: T100
+        pdb.set_trace()
 
     def _schedule_shutdown(self, signal: signal.Signals) -> None:
         if not self._signal_stop_time:
@@ -264,8 +274,7 @@ class Worker(Service):
         with exiting(file=self.stderr):
             try:
                 self._starting_fut = asyncio.ensure_future(
-                    self.start(),
-                    loop=self.loop,
+                    self.start(), loop=self.loop
                 )
                 self.loop.run_until_complete(self._starting_fut)
             except asyncio.CancelledError:
@@ -282,7 +291,8 @@ class Worker(Service):
         # for mypy NoReturn
         raise SystemExit(EX_OK)  # pragma: no cover
 
-    def on_worker_shutdown(self) -> None: ...
+    def on_worker_shutdown(self) -> None:
+        ...
 
     def stop_and_shutdown(self) -> None:
         if self._signal_stop_future and not self._signal_stop_future.done():
@@ -340,11 +350,12 @@ class Worker(Service):
         try:
             import aiomonitor
         except ImportError:
-            self.log.warning("Cannot start console: aiomonitor is not installed")
+            self.log.warning(
+                "Cannot start console: aiomonitor is not installed"
+            )
         else:
             monitor = aiomonitor.start_monitor(
-                port=self.console_port,
-                loop=self.loop,
+                port=self.console_port, loop=self.loop
             )
             self.add_context(monitor)
 
@@ -356,8 +367,6 @@ class Worker(Service):
         if self._blocking_detector is None:
             BlockDetector: Callable = symbol_by_name(self.BLOCK_DETECTOR)
             self._blocking_detector = BlockDetector(
-                self.blocking_timeout,
-                beacon=self.beacon,
-                loop=self.loop,
+                self.blocking_timeout, beacon=self.beacon, loop=self.loop
             )
         return cast(BlockingDetector, self._blocking_detector)

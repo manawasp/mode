@@ -7,7 +7,6 @@ GIT ?= git
 TOX ?= tox
 NOSETESTS ?= nosetests
 ICONV ?= iconv
-FLAKE8 ?= flake8
 PYDOCSTYLE ?= pydocstyle
 MYPY ?= mypy
 SPHINX2RST ?= sphinx2rst
@@ -36,10 +35,7 @@ help:
 	@echo "    apicheck         - Check API reference coverage."
 	@echo "    readmecheck      - Check README.rst encoding."
 	@echo "    contribcheck     - Check CONTRIBUTING.rst encoding"
-	@echo "    flakes --------  - Check code for syntax and style errors."
-	@echo "      typecheck      - Run the mypy type checker"
-	@echo "      flakecheck     - Run flake8 on the source code."
-	@echo "      pep257check    - Run pep257 on the source code."
+	@echo "    ruff             - Check code for syntax and style errors."
 	@echo "readme               - Regenerate README.rst file."
 	@echo "contrib              - Regenerate CONTRIBUTING.rst file"
 	@echo "coc                  - Regenerate CODE_OF_CONDUCT.rst file"
@@ -75,17 +71,13 @@ deps-docs:
 deps-test:
 	$(PIP) install -U -r requirements/test.txt
 
-. PHONY: deps-typecheck
-deps-typecheck:
-	$(PIP) install -U -r requirements/typecheck.txt
-
 . PHONY: deps-extras
 deps-extras:
 	$(PIP) install -U -r requirements/extras/eventlet.txt
 	$(PIP) install -U -r requirements/extras/uvloop.txt
 
 . PHONY: develop
-develop: deps-default deps-dist deps-docs deps-test deps-typecheck deps-extras
+develop: deps-default deps-dist deps-docs deps-test deps-extras
 	$(PYTHON) setup.py develop
 
 . PHONY: Documentation
@@ -100,21 +92,13 @@ docs: Documentation
 clean-docs:
 	-rm -rf "$(SPHINX_BUILDDIR)"
 
-lint: flakecheck apicheck readmecheck
+ruff:
+	ruff check . --fix
+
+lint: ruff apicheck readmecheck
 
 apicheck:
 	(cd "$(SPHINX_DIR)"; $(MAKE) apicheck)
-
-flakecheck:
-	$(FLAKE8) "$(PROJ)" "$(TESTDIR)" examples/
-
-pep257check:
-	$(PYDOCSTYLE) "$(PROJ)"
-
-flakediag:
-	-$(MAKE) flakecheck
-
-flakes: flakediag
 
 clean-readme:
 	-rm -f $(README)

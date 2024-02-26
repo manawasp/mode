@@ -10,7 +10,8 @@ if typing.TYPE_CHECKING:
     from .services import ServiceT
 else:
 
-    class ServiceT: ...  # noqa: E701
+    class ServiceT:
+        ...
 
 
 __all__ = ["SupervisorStrategyT"]
@@ -31,23 +32,28 @@ class SupervisorStrategyT(ServiceT):
         *services: ServiceT,
         max_restarts: Seconds = 100.0,
         over: Seconds = 1.0,
-        raises: Type[BaseException] = None,
+        raises: Optional[Type[BaseException]] = None,
         replacement: ReplacementT = None,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> None:
         self.replacement: Optional[ReplacementT] = replacement
 
     @abc.abstractmethod
-    def wakeup(self) -> None: ...
+    def wakeup(self) -> None:
+        ...
 
     @abc.abstractmethod
-    def add(self, *services: ServiceT) -> None: ...
+    def add(self, *services: ServiceT) -> None:
+        ...
 
     @abc.abstractmethod
-    def discard(self, *services: ServiceT) -> None: ...
+    def discard(self, *services: ServiceT) -> None:
+        ...
 
     @abc.abstractmethod
-    def service_operational(self, service: ServiceT) -> bool: ...
+    def service_operational(self, service: ServiceT) -> bool:
+        ...
 
     @abc.abstractmethod
-    async def restart_service(self, service: ServiceT) -> None: ...
+    async def restart_service(self, service: ServiceT) -> None:
+        ...

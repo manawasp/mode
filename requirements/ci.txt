@@ -1,2 +1,2 @@
--r typecheck.txt
+-r dev.txt
 pytest-cov

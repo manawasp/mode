@@ -72,7 +72,7 @@ class test_Proxy:
         assert x._get_current_object()
 
     def test_bool(self):
-        class X(object):
+        class X:
             def __bool__(self):
                 return False
 
@@ -82,22 +82,22 @@ class test_Proxy:
         assert not x
 
     def test_slots(self):
-        class X(object):
+        class X:
             __slots__ = ()
 
         x = Proxy(X)
         with pytest.raises(AttributeError):
-            x.__dict__
+            x.__dict__  # noqa: B018
 
     def test_dir(self):
-        class X(object):
+        class X:
             def __dir__(self):
                 return ["a", "b", "c"]
 
         x = Proxy(lambda: X())
         assert dir(x) == ["a", "b", "c"]
 
-        class Y(object):
+        class Y:
             def __dir__(self):
                 raise RuntimeError()
 
@@ -105,13 +105,14 @@ class test_Proxy:
         assert dir(y) == []
 
     def test_qualname(self):
-        class X: ...
+        class X:
+            ...
 
         x = Proxy(lambda: X)
         assert x.__qualname__ == X.__qualname__
 
     def test_getsetdel_attr(self):
-        class X(object):
+        class X:
             a = 1
             b = 2
             c = 3
@@ -146,7 +147,7 @@ class test_Proxy:
         assert iter(x)
 
     def test_complex_cast(self):
-        class Object(object):
+        class Object:
             def __complex__(self):
                 return complex(10.333)
 
@@ -154,7 +155,7 @@ class test_Proxy:
         assert o.__complex__() == complex(10.333)
 
     def test_index(self):
-        class Object(object):
+        class Object:
             def __index__(self):
                 return 1
 
@@ -162,7 +163,7 @@ class test_Proxy:
         assert o.__index__() == 1
 
     def test_coerce(self):
-        class Object(object):
+        class Object:
             def __coerce__(self, other):
                 return self, other
 
@@ -170,21 +171,21 @@ class test_Proxy:
         assert o.__coerce__(3)
 
     def test_hash(self):
-        class X(object):
+        class X:
             def __hash__(self):
                 return 1234
 
         assert hash(Proxy(lambda: X())) == 1234
 
     def test_call(self):
-        class X(object):
+        class X:
             def __call__(self):
                 return 1234
 
         assert CallableProxy(lambda: X())() == 1234
 
     def test_context(self):
-        class X(object):
+        class X:
             entered = exited = False
 
             def __enter__(self):
@@ -203,7 +204,7 @@ class test_Proxy:
 
     @pytest.mark.asyncio
     async def test_async_context(self):
-        class X(object):
+        class X:
             entered = exited = False
 
             async def __aenter__(self):
@@ -221,7 +222,7 @@ class test_Proxy:
         assert x.exited
 
     def test_reduce(self):
-        class X(object):
+        class X:
             def __reduce__(self):
                 return 123
 
@@ -231,7 +232,7 @@ class test_Proxy:
 
 class test_Proxy__cached:
     def test_only_evaluated_once(self):
-        class X(object):
+        class X:
             attr = 123
             evals = 0
 
@@ -381,7 +382,7 @@ class test_SequenceProxy:
     def test_index(self, *, s):
         assert s.index(1) == 0
         assert s.index(7) == 6
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError):  # noqa: PT011
             s.index(8)
 
     def test_count(self, *, s):
@@ -449,7 +450,7 @@ class test_MutableSequenceProxy(test_SequenceProxy):
     def test_remove(self, *, s, orig):
         s.remove(3)
         assert s == orig == [1, 2, 4, 5, 6, 7]
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError):  # noqa: PT011
             s.remove(3)
 
     def test_iadd(self, *, s, orig):
@@ -621,7 +622,8 @@ class test_AsyncIteratorProxy(test_AsyncIterableProxy):
 class test_AsyncGeneratorProxy(test_AsyncIteratorProxy):
     # Note: Inherits all test cases from test_AsyncIteratorProxy
 
-    class Double(Exception): ...  # tells coro to double multiplier
+    class Double(Exception):
+        ...  # tells coro to double multiplier
 
     @pytest.fixture()
     def s(self, *, orig):
@@ -641,7 +643,7 @@ class test_AsyncGeneratorProxy(test_AsyncIteratorProxy):
                 multiplier *= 2
 
     @pytest.fixture()
-    def _coro(self):
+    def _coro(self):  # noqa: PT005
         return self.corogen()
 
     @pytest.fixture()
@@ -665,7 +667,8 @@ class test_AsyncGeneratorProxy(test_AsyncIteratorProxy):
 class test_CoroutineProxy:
     # Note: Inherits all test cases from test_AsyncIteratorProxy
 
-    class Double(Exception): ...  # tells coro to double multiplier
+    class Double(Exception):
+        ...  # tells coro to double multiplier
 
     def corogen(self):
         multiplier = 2
@@ -677,7 +680,7 @@ class test_CoroutineProxy:
                 multiplier *= 2
 
     @pytest.fixture()
-    def _coro(self):
+    def _coro(self):  # noqa: PT005
         return self.corogen()
 
     @pytest.fixture()
@@ -706,10 +709,12 @@ class test_CoroutineProxy:
 def test_Proxy_from_source():
     class AbstractSource(abc.ABC):
         @abc.abstractmethod
-        def add(self, arg): ...
+        def add(self, arg):
+            ...
 
         @abc.abstractmethod
-        def mul(self, arg): ...
+        def mul(self, arg):
+            ...
 
     class ConcreteSource(AbstractSource):
         def __init__(self, value):
@@ -736,7 +741,8 @@ def test_Proxy_from_source():
 
 
 def test_Proxy_from_source__no_ABCMeta():
-    class Source: ...
+    class Source:
+        ...
 
     with pytest.raises(TypeError):
 
@@ -745,7 +751,8 @@ def test_Proxy_from_source__no_ABCMeta():
 
 
 def test_Proxy_from_source__no_abstractmethods():
-    class Source(abc.ABC): ...
+    class Source(abc.ABC):  # noqa: B024
+        ...
 
     class ProxySource(Proxy[Source]):
         __proxy_source__ = Source

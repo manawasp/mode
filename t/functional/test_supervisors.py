@@ -30,7 +30,8 @@ class StatService(Service):
         await super().restart()
 
 
-class X(StatService): ...
+class X(StatService):
+    ...
 
 
 class Y(StatService):
@@ -41,7 +42,8 @@ class Y(StatService):
         self.add_dependency(self.x)
 
 
-class Z(StatService): ...
+class Z(StatService):
+    ...
 
 
 class SupervisorTest:

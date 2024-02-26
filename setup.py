@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 import re
 
@@ -100,12 +99,12 @@ def extras_require():
 if README.exists():
     long_description = README.read_text(encoding="utf-8")
 else:
-    long_description = "See http://pypi.org/project/{}".format(NAME)
+    long_description = f"See http://pypi.org/project/{NAME}"
 
 # -*- %%% -*-
 
 packages = find_packages(
-    exclude=["t", "t.*", "docs", "docs.*", "examples", "examples.*"],
+    exclude=["t", "t.*", "docs", "docs.*", "examples", "examples.*"]
 )
 assert not any(package.startswith("t.") for package in packages)
 
