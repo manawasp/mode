@@ -158,8 +158,7 @@ class HasLog(Protocol):
     @abc.abstractmethod
     def log(
         self, severity: int, message: str, *args: Any, **kwargs: Any
-    ) -> None:
-        ...
+    ) -> None: ...
 
 
 LogSeverityMixinBase = HasLog
@@ -908,8 +907,7 @@ class FileLogProxy(TextIO):
     def newlines(self) -> bool:
         return False
 
-    def flush(self) -> None:
-        ...
+    def flush(self) -> None: ...
 
     @property
     def mode(self) -> str:
@@ -973,8 +971,7 @@ class FileLogProxy(TextIO):
         exc_type: Optional[Type[BaseException]] = None,
         exc_val: Optional[BaseException] = None,
         exc_tb: Optional[TracebackType] = None,
-    ) -> Optional[bool]:
-        ...
+    ) -> Optional[bool]: ...
 
 
 @contextmanager

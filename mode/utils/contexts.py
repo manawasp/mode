@@ -23,5 +23,4 @@ class asyncnullcontext(AbstractAsyncContextManager):
         exc_type: Optional[Type[BaseException]] = None,
         exc_val: Optional[BaseException] = None,
         exc_tb: Optional[TracebackType] = None,
-    ) -> None:
-        ...
+    ) -> None: ...

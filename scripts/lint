@@ -8,5 +8,5 @@ export SOURCE_FILES="mode t setup.py"
 
 set -x
 
-${PREFIX}ruff $SOURCE_FILES --fix
+${PREFIX}ruff check $SOURCE_FILES --fix
 ${PREFIX}ruff format $SOURCE_FILES

@@ -125,11 +125,9 @@ class ServiceThread(Service):
         super().__init__(loop=self.thread_loop, **kwargs)
         assert self._shutdown.loop is self.parent_loop
 
-    async def on_thread_started(self) -> None:
-        ...
+    async def on_thread_started(self) -> None: ...
 
-    async def on_thread_stop(self) -> None:
-        ...
+    async def on_thread_stop(self) -> None: ...
 
     # The deal with asyncio.Event and threads.
     #
@@ -237,14 +235,17 @@ class ServiceThread(Service):
     def set_shutdown(self) -> None:
         self.parent_loop.call_soon_threadsafe(self._shutdown.set)
 
-    async def _stop_children(self) -> None:
-        ...  # called by thread instead of .stop()
+    async def _stop_children(
+        self,
+    ) -> None: ...  # called by thread instead of .stop()
 
-    async def _stop_futures(self) -> None:
-        ...  # called by thread instead of .stop()
+    async def _stop_futures(
+        self,
+    ) -> None: ...  # called by thread instead of .stop()
 
-    async def _stop_exit_stacks(self) -> None:
-        ...  # called by thread instead of .stop()
+    async def _stop_exit_stacks(
+        self,
+    ) -> None: ...  # called by thread instead of .stop()
 
     async def _shutdown_thread(self) -> None:
         await self.on_thread_stop()

@@ -105,8 +105,7 @@ class test_Proxy:
         assert dir(y) == []
 
     def test_qualname(self):
-        class X:
-            ...
+        class X: ...
 
         x = Proxy(lambda: X)
         assert x.__qualname__ == X.__qualname__
@@ -622,8 +621,7 @@ class test_AsyncIteratorProxy(test_AsyncIterableProxy):
 class test_AsyncGeneratorProxy(test_AsyncIteratorProxy):
     # Note: Inherits all test cases from test_AsyncIteratorProxy
 
-    class Double(Exception):
-        ...  # tells coro to double multiplier
+    class Double(Exception): ...  # tells coro to double multiplier
 
     @pytest.fixture()
     def s(self, *, orig):
@@ -667,8 +665,7 @@ class test_AsyncGeneratorProxy(test_AsyncIteratorProxy):
 class test_CoroutineProxy:
     # Note: Inherits all test cases from test_AsyncIteratorProxy
 
-    class Double(Exception):
-        ...  # tells coro to double multiplier
+    class Double(Exception): ...  # tells coro to double multiplier
 
     def corogen(self):
         multiplier = 2
@@ -709,12 +706,10 @@ class test_CoroutineProxy:
 def test_Proxy_from_source():
     class AbstractSource(abc.ABC):
         @abc.abstractmethod
-        def add(self, arg):
-            ...
+        def add(self, arg): ...
 
         @abc.abstractmethod
-        def mul(self, arg):
-            ...
+        def mul(self, arg): ...
 
     class ConcreteSource(AbstractSource):
         def __init__(self, value):
@@ -741,8 +736,7 @@ def test_Proxy_from_source():
 
 
 def test_Proxy_from_source__no_ABCMeta():
-    class Source:
-        ...
+    class Source: ...
 
     with pytest.raises(TypeError):
 

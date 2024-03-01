@@ -82,8 +82,7 @@ try:
             super().__init__(*args, **kwargs)
 
     @typing.no_type_check  # type: ignore
-    class _UsingKwargsInNew(_InitSubclassCheck, ident=909):
-        ...
+    class _UsingKwargsInNew(_InitSubclassCheck, ident=909): ...
 
 except TypeError:
     abc_compatible_with_init_subclass = False

@@ -518,12 +518,10 @@ class SequenceRole(Sequence[T_co]):
         return cast(Sequence[T_co], obj)
 
     @overload
-    def __getitem__(self, i: int) -> T_co:
-        ...
+    def __getitem__(self, i: int) -> T_co: ...
 
     @overload
-    def __getitem__(self, s: slice) -> MutableSequence[T_co]:
-        ...
+    def __getitem__(self, s: slice) -> MutableSequence[T_co]: ...
 
     def __getitem__(self, s: Any) -> Any:
         return self._get_sequence().__getitem__(s)
@@ -562,23 +560,19 @@ class MutableSequenceRole(SequenceRole[T], MutableSequence[T]):
         self._get_sequence().insert(index, object)
 
     @overload
-    def __setitem__(self, i: int, o: T) -> None:
-        ...
+    def __setitem__(self, i: int, o: T) -> None: ...
 
     @overload
-    def __setitem__(self, s: slice, o: Iterable[T]) -> None:
-        ...
+    def __setitem__(self, s: slice, o: Iterable[T]) -> None: ...
 
     def __setitem__(self, index_or_slice: Any, o: Any) -> None:
         self._get_sequence().__setitem__(index_or_slice, o)
 
     @overload
-    def __delitem__(self, i: int) -> None:
-        ...
+    def __delitem__(self, i: int) -> None: ...
 
     @overload
-    def __delitem__(self, i: slice) -> None:
-        ...
+    def __delitem__(self, i: slice) -> None: ...
 
     def __delitem__(self, i: Any) -> None:
         self._get_sequence().__delitem__(i)
@@ -748,12 +742,10 @@ class MappingRole(Mapping[KT, VT_co]):
         return self._get_mapping().__getitem__(key)
 
     @overload
-    def get(self, k: KT) -> Optional[VT_co]:
-        ...
+    def get(self, k: KT) -> Optional[VT_co]: ...
 
     @overload
-    def get(self, k: KT, default: Union[VT_co, T]) -> Union[VT_co, T]:
-        ...
+    def get(self, k: KT, default: Union[VT_co, T]) -> Union[VT_co, T]: ...
 
     def get(self, *args: Any, **kwargs: Any) -> Any:
         return self._get_mapping().get(*args, **kwargs)
@@ -798,12 +790,10 @@ class MutableMappingRole(MappingRole[KT, VT], MutableMapping[KT, VT]):
         self._get_mapping().clear()
 
     @overload
-    def pop(self, k: KT) -> VT:
-        ...
+    def pop(self, k: KT) -> VT: ...
 
     @overload
-    def pop(self, k: KT, default: Union[VT, T] = ...) -> Union[VT, T]:
-        ...
+    def pop(self, k: KT, default: Union[VT, T] = ...) -> Union[VT, T]: ...
 
     def pop(self, *args: Any, **kwargs: Any) -> Any:
         return self._get_mapping().pop(*args, **kwargs)
@@ -815,16 +805,13 @@ class MutableMappingRole(MappingRole[KT, VT], MutableMapping[KT, VT]):
         return self._get_mapping().setdefault(k, *args)
 
     @overload
-    def update(self, __m: Mapping[KT, VT], **kwargs: VT) -> None:
-        ...
+    def update(self, __m: Mapping[KT, VT], **kwargs: VT) -> None: ...
 
     @overload
-    def update(self, __m: Iterable[Tuple[KT, VT]], **kwargs: VT) -> None:
-        ...
+    def update(self, __m: Iterable[Tuple[KT, VT]], **kwargs: VT) -> None: ...
 
     @overload
-    def update(self, **kwargs: VT) -> None:
-        ...
+    def update(self, **kwargs: VT) -> None: ...
 
     def update(self, *args: Any, **kwargs: Any) -> None:
         self._get_mapping().update(*args, **kwargs)

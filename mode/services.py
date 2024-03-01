@@ -688,8 +688,7 @@ class Service(ServiceBase, ServiceCallbacks):
         """Additional user initialization."""
         ...
 
-    def on_init(self) -> None:
-        ...  # deprecated: use __post_init__
+    def on_init(self) -> None: ...  # deprecated: use __post_init__
 
     def on_init_dependencies(self) -> Iterable[ServiceT]:
         """Return list of service dependencies for this service."""
