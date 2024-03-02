@@ -1,16 +1,18 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.package-data]
+"modeStreaming" = ["py.typed"]
 
 [project]
 name = "mode-streaming"
-# description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
+description = "AsyncIO Service-based programming"
 readme = "README.rst"
 requires-python = ">=3.8"
-license = "BSD"
 keywords = ["asyncio", "service", "bootsteps", "graph", "coroutine"]
 authors = [
-    # { name = "Sebastián Ramírez", email = "tiangolo@gmail.com" },
+    { name = "Faust Streaming", email = "williambbarnhart@gmail.com" },
 ]
 classifiers = [
     "Framework :: AsyncIO",
@@ -49,61 +51,57 @@ uvloop = [
     "uvloop>=0.19.0",
 ]
 
-
 [project.urls]
 Homepage = "https://github.com/faust-streaming/mode"
 Documentation = "https://faust-streaming.github.io/mode/"
 Repository = "https://github.com/faust-streaming/mode"
 
-[tool.coverage.run]
-branch = 1
-cover_pylib = 0
-include = "*mode/*"
-omit = "t.*"
-
 [tool.pytest.ini_options]
 minversion = "6.0"
 python_classes = "test_*"
 testpaths = [
-    "t/unit",
-    "t/functional",
+    "tests/unit",
+    "tests/functional",
 ]
 
-[tool.coverage.report]
-omit = """
-    */python?.?/*
-    */site-packages/*
-    */pypy/*
+[tool.coverage.run]
+parallel = true
+context = '${CONTEXT}'
+source = [
+    "mode",
+    "tests/*"
+]
+omit = [
+    "venv/*",
+    "tests/*",
 
     # tested by functional tests
-    */mode/loop/*
+    "mode/loop/*",
 
     # not needed
-    */mode/types/*
-    */mode/utils/types/*
-    */mode/utils/mocks.py
+    "mode/types/*",
+    "mode/utils/types/*",
+    "mode/utils/mocks.py",
 
     # been in celery since forever
-    */mode/utils/graphs/*
-"""
-exclude_lines = """
-    # Have to re-enable the standard pragma
-    if typing.TYPE_CHECKING:
+    "mode/utils/graphs/*",
+]
+branch = true
 
-    pragma: no cover
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "@abstractmethod",
+    "@abc.abstractmethod",
+    "if sys.platform == 'win32':",
+    "if typing.TYPE_CHECKING:",
+    "if TYPE_CHECKING:"
+]
+fail_under = 93
+show_missing = true
 
-    if sys.platform == 'win32':
-
-    @abc.abstractmethod
-
-    # Py3.6
-
-    @overload
-"""
-
-[mypy]
+[tool.mypy]
 # --strict but not --implicit-optional
-python_version = 3.8
 cache_fine_grained = true
 check_untyped_defs = true
 disallow_any_decorated = false
@@ -197,7 +195,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"t/**" = ["D", "S"]
+"tests/**" = ["D", "S"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["mode", "t"]

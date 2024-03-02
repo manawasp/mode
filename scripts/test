@@ -11,8 +11,4 @@ if [ -z $GITHUB_ACTIONS ]; then
     scripts/check
 fi
 
-${PREFIX}pytest tests/unit tests/functional
-
-if [ -z $GITHUB_ACTIONS ]; then
-    scripts/coverage
-fi
+${PREFIX}pytest tests/unit tests/functional --cov=mode

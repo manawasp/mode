@@ -22,8 +22,8 @@ You can install it by doing the following::
 
     $ tar xvfz mode-streaming-0.1.0.tar.gz
     $ cd mode-streaming-0.1.0
-    $ python setup.py build
-    # python setup.py install
+    $ python build
+    # python install
 
 The last command must be executed as a privileged user if
 you are not currently using a virtualenv.

@@ -51,8 +51,7 @@ clean: clean-docs clean-pyc clean-build
 clean-dist: clean clean-git-force
 
 release:
-	$(PYTHON) setup.py register sdist bdist_wheel upload --sign --identity="$(PGPIDENT)"
-
+	$(PYTHON) register sdist bdist_wheel upload --sign --identity="$(PGPIDENT)"
 
 . PHONY: deps-default
 deps-default:
@@ -77,7 +76,7 @@ deps-extras:
 
 . PHONY: develop
 develop: deps-default deps-dist deps-docs deps-test deps-extras
-	$(PYTHON) setup.py develop
+	$(PYTHON) develop
 
 . PHONY: Documentation
 Documentation:
@@ -151,7 +150,7 @@ cov:
 	$(PYTEST) -x --cov="$(PROJ)" --cov-report=html
 
 build:
-	$(PYTHON) setup.py sdist bdist_wheel
+	$(PYTHON) sdist bdist_wheel
 
 distcheck: lint test clean
 
