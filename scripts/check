@@ -8,7 +8,6 @@ export SOURCE_FILES="mode t setup.py"
 
 set -x
 
-${PREFIX}isort --check --diff --project=faust $SOURCE_FILES
-${PREFIX}black --check --diff $SOURCE_FILES
-#${PREFIX}flake8 $SOURCE_FILES
+${PREFIX}ruff check $SOURCE_FILES --diff
+${PREFIX}ruff format $SOURCE_FILES --check --diff
 # ${PREFIX}mypy $SOURCE_FILES

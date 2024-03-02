@@ -8,6 +8,5 @@ export SOURCE_FILES="mode t setup.py"
 
 set -x
 
-${PREFIX}autoflake --in-place --recursive $SOURCE_FILES
-${PREFIX}isort --project=faust $SOURCE_FILES
-${PREFIX}black $SOURCE_FILES
+${PREFIX}ruff check $SOURCE_FILES --fix
+${PREFIX}ruff format $SOURCE_FILES
