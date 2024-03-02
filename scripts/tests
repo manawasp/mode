@@ -11,8 +11,7 @@ if [ -z $GITHUB_ACTIONS ]; then
     scripts/check
 fi
 
-${PREFIX}pytest t/unit t/functional
-#${PREFIX}bandit -b extra/bandit/baseline.json -c extra/bandit/config.yaml -r mode
+${PREFIX}pytest tests/unit tests/functional
 
 if [ -z $GITHUB_ACTIONS ]; then
     scripts/coverage

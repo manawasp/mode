@@ -61,7 +61,7 @@ ignore = [
 ]
 
 [lint.per-file-ignores]
-"t/**" = ["D", "S"]
+"tests/**" = ["D", "S"]
 
 [lint.isort]
 known-first-party = ["mode", "t"]
