@@ -1,12 +1,17 @@
--r default.txt
--r dev.txt
-hypothesis>=3.31
 freezegun>=0.3.11
+hypothesis>=3.31
+mypy
+pre-commit
 pytest-aiofiles>=0.2.0
 pytest-asyncio==0.21.1
 pytest-base-url>=1.4.1
+pytest-cov
 pytest-forked
 pytest-openfiles>=0.2.0
 pytest-random-order>=0.5.4
+pytest-sugar # TODO: check the need
 pytest>=5.4.0
 pytz
+ruff>=0.3.0
+vulture
+yarl

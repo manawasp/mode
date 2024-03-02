@@ -7,7 +7,6 @@ GIT ?= git
 TOX ?= tox
 NOSETESTS ?= nosetests
 ICONV ?= iconv
-PYDOCSTYLE ?= pydocstyle
 MYPY ?= mypy
 SPHINX2RST ?= sphinx2rst
 
