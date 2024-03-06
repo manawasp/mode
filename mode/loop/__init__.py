@@ -8,44 +8,54 @@ The choices available are:
 aio **default**
     Normal :mod:`asyncio` event loop policy.
 
-eventlet
-    Use :pypi:`eventlet` as the event loop.
+### eventlet
 
-    This uses :pypi:`aioeventlet` and will apply the
-    :pypi:`eventlet` monkey-patches.
+Use :pypi:`eventlet` as the event loop.
 
-    To enable execute the following as the first thing that happens
-    when your program starts (e.g. add it as the top import of your
-    entrypoint module)::
+This uses :pypi:`aioeventlet` and will apply the
+:pypi:`eventlet` monkey-patches.
 
-        >>> import mode.loop
-        >>> mode.loop.use('eventlet')
+To enable execute the following as the first thing that happens
+when your program starts (e.g. add it as the top import of your
+entrypoint module):
 
-gevent
-    Use :pypi:`gevent` as the event loop.
+```python
+import mode.loop
+mode.loop.use('eventlet')
+```
 
-    This uses :pypi:`aiogevent` (+modifications) and will apply the
-    :pypi:`gevent` monkey-patches.
+### gevent
 
-    This choice enables you to run blocking Python code as if they
-    have invisible `async/await` syntax around it (NOTE: C extensions are
-    not usually gevent compatible).
+Use :pypi:`gevent` as the event loop.
 
-    To enable execute the following as the first thing that happens
-    when your program starts (e.g. add it as the top import of your
-    entrypoint module)::
+This uses :pypi:`aiogevent` (+modifications) and will apply the
+:pypi:`gevent` monkey-patches.
 
-        >>> import mode.loop
-        >>> mode.loop.use('gevent')
-uvloop
-    Event loop using :pypi:`uvloop`.
+This choice enables you to run blocking Python code as if they
+have invisible `async/await` syntax around it (NOTE: C extensions are
+not usually gevent compatible).
 
-    To enable execute the following as the first thing that happens
-    when your program starts (e.g. add it as the top import of your
-    entrypoint module)::
+To enable execute the following as the first thing that happens
+when your program starts (e.g. add it as the top import of your
+entrypoint module):
 
-        >>> import mode.loop
-        >>> mode.loop.use('uvloop')
+```python
+import mode.loop
+mode.loop.use('gevent')
+```
+
+### uvloop
+
+Event loop using :pypi:`uvloop`.
+
+To enable execute the following as the first thing that happens
+when your program starts (e.g. add it as the top import of your
+entrypoint module):
+
+```python
+import mode.loop
+mode.loop.use('uvloop')
+```
 """
 
 import importlib

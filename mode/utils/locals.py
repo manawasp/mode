@@ -5,9 +5,9 @@ Celery, and other libraries to keep a thread-local stack of objects.
 
 - Supports typing:
 
-    .. sourcecode:: python
-
-        request_stack: LocalStack[Request] = LocalStack()
+    ```python
+    request_stack: LocalStack[Request] = LocalStack()
+    ```
 """
 
 from contextlib import contextmanager

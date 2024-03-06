@@ -1,0 +1,3 @@
+# mode.locals
+
+::: mode.locals

@@ -80,16 +80,16 @@ class stampede:
     Examples:
         Here's an example coroutine method connecting a network client:
 
-        .. sourcecode:: python
+        ```python
+        class Client:
 
-            class Client:
+            @stampede
+            async def maybe_connect(self):
+                await self._connect()
 
-                @stampede
-                async def maybe_connect(self):
-                    await self._connect()
-
-                async def _connect(self):
-                    return Connection()
+            async def _connect(self):
+                return Connection()
+        ```
 
         In the above example, if multiple coroutines call ``maybe_connect``
         at the same time, then only one of them will actually perform the

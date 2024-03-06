@@ -80,7 +80,6 @@ develop: deps-default deps-dist deps-docs deps-test deps-extras
 
 . PHONY: Documentation
 Documentation:
-	$(PIP) install -r requirements/docs.txt
 	(cd "$(SPHINX_DIR)"; $(MAKE) html)
 	mv "$(SPHINX_HTMLDIR)" $(DOCUMENTATION)
 

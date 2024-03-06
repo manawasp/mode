@@ -116,10 +116,12 @@ class Heap(MutableSequence[T]):
 
         Note that the value returned may be larger than item!
         That constrains reasonable uses of this routine unless written as
-        part of a conditional replacement::
+        part of a conditional replacement:
 
-            if item > heap[0]:
-                item = heap.replace(item)
+        ```python
+        if item > heap[0]:
+            item = heap.replace(item)
+        ```
         """
         return heapreplace(self.data, item)
 

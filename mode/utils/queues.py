@@ -29,31 +29,41 @@ class FlowControlEvent:
     The FlowControlEvent manages flow in one or many queue instances
     at the same time.
 
-    To flow control queues, first create the shared event::
+    To flow control queues, first create the shared event:
 
-        >>> flow_control = FlowControlEvent()
+    ```sh
+    >>> flow_control = FlowControlEvent()
+    ```
 
-    Then pass that shared event to the queues that should be managed by it::
+    Then pass that shared event to the queues that should be managed by it:
 
-        >>> q1 = FlowControlQueue(maxsize=1, flow_control=flow_control)
-        >>> q2 = FlowControlQueue(flow_control=flow_control)
+    ```sh
+    >>> q1 = FlowControlQueue(maxsize=1, flow_control=flow_control)
+    >>> q2 = FlowControlQueue(flow_control=flow_control)
+    ```
 
     If you want the contents of the queue to be cleared when flow is resumed,
-    then specify that by using the ``clear_on_resume`` flag::
+    then specify that by using the `clear_on_resume` flag:
 
-        >>> q3 = FlowControlQueue(clear_on_resume=True,
-        ...                       flow_control=flow_control)
+    ```sh
+    >>> q3 = FlowControlQueue(clear_on_resume=True,
+    ...                       flow_control=flow_control)
+    ```
 
-    To suspend production into queues, use ``flow_control.suspend``::
+    To suspend production into queues, use `flow_control.suspend`:
 
-        >>> flow_control.suspend()
+    ```sh
+    >>> flow_control.suspend()
+    ```
 
     While the queues are suspend, any producer attempting to send something
     to the queue will hang until flow is resumed.
 
-    To resume production into queues, use ``flow_control.resume``::
+    To resume production into queues, use `flow_control.resume`:
 
-        >>> flow_control.resume()
+    ```sh
+    >>> flow_control.resume()
+    ```
 
     Notes:
         In Faust queues are managed by the ``app.flow_control`` event.

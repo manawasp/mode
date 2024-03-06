@@ -121,11 +121,14 @@ def enumeration(
     sep: str = "\n",
     template: str = "{index}) {item}",
 ) -> str:
-    r"""Enumerate list of strings.
+    """Enumerate list of strings.
 
     Example:
-        >>> enumeration(['x', 'y', '...'])
-        "1) x\n2) y\n3) ..."
+
+    ```sh
+    >>> enumeration(['x', 'y', '...'])
+    "1) x\n2) y\n3) ..."
+    ```
     """
     return sep.join(
         template.format(index=index, item=item)
@@ -208,16 +211,18 @@ def _abbr_abrupt(s: str, max: int, suffix: str = "...") -> str:
 def abbr_fqdn(origin: str, name: str, *, prefix: str = "") -> str:
     """Abbreviate fully-qualified Python name, by removing origin.
 
-    ``app.origin`` is the package where the app is defined,
-    so if this is ``examples.simple``::
+    `app.origin` is the package where the app is defined,
+    so if this is `examples.simple`:
 
-        >>> app.origin
-        'examples.simple'
-        >>> abbr_fqdn(app.origin, 'examples.simple.Withdrawal', prefix='[...]')
-        '[...]Withdrawal'
+    ```sh
+    >>> app.origin
+    'examples.simple'
+    >>> abbr_fqdn(app.origin, 'examples.simple.Withdrawal', prefix='[...]')
+    '[...]Withdrawal'
 
-        >>> abbr_fqdn(app.origin, 'examples.other.Foo', prefix='[...]')
-        'examples.other.foo'
+    >>> abbr_fqdn(app.origin, 'examples.other.Foo', prefix='[...]')
+    'examples.other.foo'
+    ```
 
     :func:`shorten_fqdn` is similar, but will always shorten a too long name,
     abbr_fqdn will only remove the origin portion of the name.

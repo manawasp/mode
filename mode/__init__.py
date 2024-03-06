@@ -112,10 +112,6 @@ class _module(ModuleType):
                 "VERSION",
                 "version_info",
                 "__package__",
-                "__author__",
-                "__contact__",
-                "__homepage__",
-                "__docformat__",
             )
         )
         return result

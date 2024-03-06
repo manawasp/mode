@@ -198,7 +198,7 @@ ignore = [
 "tests/**" = ["D", "S"]
 
 [tool.ruff.lint.isort]
-known-first-party = ["mode", "t"]
+known-first-party = ["mode", "tests"]
 split-on-trailing-comma = false
 
 [tool.ruff.lint.pydocstyle]

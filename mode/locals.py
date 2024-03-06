@@ -12,17 +12,16 @@ these can be combined to create proxies.
 For example to create a proxy to a class that both implements
 the mutable mapping interface and is an async context manager:
 
-.. sourcecode:: python
+```python
+def create_real():
+    print('CREATING X')
+    return X()
 
+class XProxy(MutableMappingRole, AsyncContextManagerRole):
+    ...
 
-    def create_real():
-        print('CREATING X')
-        return X()
-
-    class XProxy(MutableMappingRole, AsyncContextManagerRole):
-        ...
-
-    x = XProxy(create_real)
+x = XProxy(create_real)
+```
 
 Evaluation
 ==========
@@ -31,46 +30,46 @@ By default the callable passed to :class:`Proxy` will be evaluated
 every time it is needed, so in the example above a new
 X will be created every time you access the underlying object:
 
-.. sourcecode:: pycon
+```sh
+>>> x['foo'] = 'value'
+CREATING X
 
-    >>> x['foo'] = 'value'
-    CREATING X
+>>> x['foo']
+CREATING X
+'value'
 
-    >>> x['foo']
-    CREATING X
-    'value'
+>>> X['foo']
+CREATING X
+'value'
 
-    >>> X['foo']
-    CREATING X
-    'value'
-
-    >>> # evaluates twice, once for async with then for __getitem__:
-    >>> async with x:
-    ...    x['foo']
-    CREATING X
-    CREATING X
-    'value'
+>>> # evaluates twice, once for async with then for __getitem__:
+>>> async with x:
+...    x['foo']
+CREATING X
+CREATING X
+'value'
+```
 
 If you want the creation of the object to be lazy (created
 when first needed), you can pass the `cache=True` argument to :class:`Proxy`:
 
-.. sourcecode:: pycon
+```sh
+>>> x = XProxy(create_real, cache=True)
 
-    >>> x = XProxy(create_real, cache=True)
+>>> # Now only evaluates the first time it is needed.
+>>> x['foo'] = 'value'
+CREATING X
 
-    >>> # Now only evaluates the first time it is needed.
-    >>> x['foo'] = 'value'
-    CREATING X
+>>> x['foo']
+'value'
 
-    >>> x['foo']
-    'value'
+>>> X['foo']
+'value'
 
-    >>> X['foo']
-    'value'
-
-    >>> async with x:
-    ...    x['foo']
-    'value'
+>>> async with x:
+...    x['foo']
+'value'
+```
 """
 
 import sys
