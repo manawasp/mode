@@ -1,8 +1,3 @@
-six
-sphinx<6.0.0
-sphinx_celery>=1.4.8
-sphinx-autodoc-annotation
-alabaster
-babel
-sphinx-autobuild # TODO: check need
-sphinx2rst>=1.0 # TODO: check need
+mkdocs>=1.5.3
+mkdocs-material>=9.5.13
+mkdocstrings>=0.24.1

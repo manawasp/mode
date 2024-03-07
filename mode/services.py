@@ -62,7 +62,7 @@ class WaitResults(NamedTuple):
 
 
 class WaitResult(NamedTuple):
-    """Return value of :meth:`Service.wait`."""
+    """Return value of `Service.wait`."""
 
     #: Return value of the future we were waiting for.
     result: Any
@@ -443,11 +443,11 @@ class Service(ServiceBase, ServiceCallbacks):
         """Background timer executing every ``n`` seconds.
 
         ```python
-            class S(Service):
+        class S(Service):
 
-                @Service.timer(1.0)
-                async def background_timer(self):
-                    print('Waking up')
+            @Service.timer(1.0)
+            async def background_timer(self):
+                print('Waking up')
         ```
         """
         _interval = want_seconds(interval)
@@ -1063,7 +1063,7 @@ class Service(ServiceBase, ServiceCallbacks):
         """Sleep `interval` seconds for every iteration.
 
         This is an async iterator that takes advantage
-        of :func:`~mode.timers.Timer` to monitor drift and timer
+        of `~mode.timers.Timer` to monitor drift and timer
         overlap.
 
         Uses `Service.sleep` so exits fast when the service is

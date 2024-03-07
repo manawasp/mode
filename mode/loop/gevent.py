@@ -1,4 +1,4 @@
-"""Enable :pypi:`gevent` support for :mod:`asyncio`."""
+"""Enable [`gevent`](https://pypi.org/project/gevent) support for `asyncio`."""
 
 import asyncio
 import os

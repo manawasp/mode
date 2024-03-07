@@ -123,7 +123,7 @@ TUPLE_TYPES: Tuple[Type, ...] = cast(Tuple[Type, ...], (Tuple,))
 
 
 class InvalidAnnotation(Exception):
-    """Raised by :func:`annotations` when encountering an invalid type."""
+    """Raised by `annotations` when encountering an invalid type."""
 
 
 @total_ordering
@@ -152,7 +152,7 @@ class KeywordReduce:
     """Mixin class for objects that can be "pickled".
 
     "Pickled" means the object can be serialized using the Python binary
-    serializer -- the :mod:`pickle` module.
+    serializer -- the `pickle` module.
 
     Python objects are made pickleable through defining the ``__reduce__``
     method, that returns a tuple of:
@@ -265,11 +265,11 @@ def annotations(
             :exc:`InvalidAnnotation` (does not test for subclasses).
         alias_types: Mapping of original type to replacement type.
         skip_classvar: Skip attributes annotated with
-            :class:`typing.ClassVar`.
+            `typing.ClassVar`.
         globalns: Global namespace to use when evaluating forward
-            references (see :class:`typing.ForwardRef`).
+            references (see `typing.ForwardRef`).
         localns: Local namespace to use when evaluating forward
-            references (see :class:`typing.ForwardRef`).
+            references (see `typing.ForwardRef`).
 
     Returns:
         Tuple[FieldMapping, DefaultsMapping]: Tuple with two dictionaries,

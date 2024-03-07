@@ -121,7 +121,7 @@ class stampede:
 def done_future(
     result: Any = None, *, loop: Optional[asyncio.AbstractEventLoop] = None
 ) -> asyncio.Future:
-    """Return :class:`asyncio.Future` that is already evaluated."""
+    """Return `asyncio.Future` that is already evaluated."""
     f = (
         loop or asyncio.get_event_loop_policy().get_event_loop()
     ).create_future()
@@ -167,7 +167,7 @@ def maybe_set_result(fut: Optional[asyncio.Future], result: Any) -> bool:
 
 
 def notify(fut: Optional[asyncio.Future], result: Any = None) -> None:
-    """Set :class:`asyncio.Future` result if future exists and is not done."""
+    """Set `asyncio.Future` result if future exists and is not done."""
     # can be used to turn a Future into a lockless, single-consumer condition,
     # for multi-consumer use asyncio.Condition
     if fut is not None and not fut.done():

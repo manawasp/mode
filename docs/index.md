@@ -21,19 +21,18 @@ restart and supervise.
 A service is just a class:
 
 ```python
-    class PageViewCache(Service):
-        redis: Redis = None
+class PageViewCache(Service):
+    redis: Redis = None
 
-        async def on_start(self) -> None:
-            self.redis = connect_to_redis()
+    async def on_start(self) -> None:
+        self.redis = connect_to_redis()
 
-        async def update(self, url: str, n: int = 1) -> int:
-            return await self.redis.incr(url, n)
+    async def update(self, url: str, n: int = 1) -> int:
+        return await self.redis.incr(url, n)
 
-        async def get(self, url: str) -> int:
-            return await self.redis.get(url)
+    async def get(self, url: str) -> int:
+        return await self.redis.get(url)
 ```
-
 
 Services are started, stopped and restarted and have
 callbacks for those actions.
@@ -41,212 +40,113 @@ callbacks for those actions.
 It can start another service:
 
 ```python
-    class App(Service):
-        page_view_cache: PageViewCache = None
+class App(Service):
+    page_view_cache: PageViewCache = None
 
-        async def on_start(self) -> None:
-            await self.add_runtime_dependency(self.page_view_cache)
+    async def on_start(self) -> None:
+        await self.add_runtime_dependency(self.page_view_cache)
 
-        @cached_property
-        def page_view_cache(self) -> PageViewCache:
-            return PageViewCache()
+    @cached_property
+    def page_view_cache(self) -> PageViewCache:
+        return PageViewCache()
 ```
 
 It can include background tasks:
 
 ```python
-    class PageViewCache(Service):
+class PageViewCache(Service):
 
-        @Service.timer(1.0)
-        async def _update_cache(self) -> None:
-            self.data = await cache.get('key')
+    @Service.timer(1.0)
+    async def _update_cache(self) -> None:
+        self.data = await cache.get('key')
 ```
 
 Services that depends on other services actually form a graph
 that you can visualize.
 
-Worker
-    Mode optionally provides a worker that you can use to start the program,
-    with support for logging, blocking detection, remote debugging and more.
+### Worker
 
-    To start a worker add this to your program:
+Mode optionally provides a worker that you can use to start the program,
+with support for logging, blocking detection, remote debugging and more.
 
-        if __name__ == '__main__':
-            from mode import Worker
-            Worker(Service(), loglevel="info").execute_from_commandline()
-
-    Then execute your program to start the worker:
-
-    ```sh
-        $ python examples/tutorial.py
-        [2018-03-27 15:47:12,159: INFO]: [^Worker]: Starting...
-        [2018-03-27 15:47:12,160: INFO]: [^-AppService]: Starting...
-        [2018-03-27 15:47:12,160: INFO]: [^--Websockets]: Starting...
-        STARTING WEBSOCKET SERVER
-        [2018-03-27 15:47:12,161: INFO]: [^--UserCache]: Starting...
-        [2018-03-27 15:47:12,161: INFO]: [^--Webserver]: Starting...
-        [2018-03-27 15:47:12,164: INFO]: [^--Webserver]: Serving on port 8000
-        REMOVING EXPIRED USERS
-        REMOVING EXPIRED USERS
-    ```
-
-    To stop it hit :kbd:`Control-c`:
-
-    ```sh
-        [2018-03-27 15:55:08,084: INFO]: [^Worker]: Stopping on signal received...
-        [2018-03-27 15:55:08,084: INFO]: [^Worker]: Stopping...
-        [2018-03-27 15:55:08,084: INFO]: [^-AppService]: Stopping...
-        [2018-03-27 15:55:08,084: INFO]: [^--UserCache]: Stopping...
-        REMOVING EXPIRED USERS
-        [2018-03-27 15:55:08,085: INFO]: [^Worker]: Gathering service tasks...
-        [2018-03-27 15:55:08,085: INFO]: [^--UserCache]: -Stopped!
-        [2018-03-27 15:55:08,085: INFO]: [^--Webserver]: Stopping...
-        [2018-03-27 15:55:08,085: INFO]: [^Worker]: Gathering all futures...
-        [2018-03-27 15:55:08,085: INFO]: [^--Webserver]: Closing server
-        [2018-03-27 15:55:08,086: INFO]: [^--Webserver]: Waiting for server to close handle
-        [2018-03-27 15:55:08,086: INFO]: [^--Webserver]: Shutting down web application
-        [2018-03-27 15:55:08,086: INFO]: [^--Webserver]: Waiting for handler to shut down
-        [2018-03-27 15:55:08,086: INFO]: [^--Webserver]: Cleanup
-        [2018-03-27 15:55:08,086: INFO]: [^--Webserver]: -Stopped!
-        [2018-03-27 15:55:08,086: INFO]: [^--Websockets]: Stopping...
-        [2018-03-27 15:55:08,086: INFO]: [^--Websockets]: -Stopped!
-        [2018-03-27 15:55:08,087: INFO]: [^-AppService]: -Stopped!
-        [2018-03-27 15:55:08,087: INFO]: [^Worker]: -Stopped!
-    ```
-
-Beacons
-    The ``beacon`` object that we pass to services keeps track of the services
-    in a graph.
-
-    They are not strictly required, but can be used to visualize a running
-    system, for example we can render it as a pretty graph.
-
-    This requires you to have the `pydot` library and GraphViz
-    installed:
-
-    ```sh
-    $ pip install pydot
-    ```
-
-    Let's change the app service class to dump the graph to an image
-    at startup:
-
-
-    ```python
-        class AppService(Service):
-
-            async def on_start(self) -> None:
-                print('APP STARTING')
-                import pydot
-                import io
-                o = io.StringIO()
-                beacon = self.app.beacon.root or self.app.beacon
-                beacon.as_graph().to_dot(o)
-                graph, = pydot.graph_from_dot_data(o.getvalue())
-                print('WRITING GRAPH TO image.png')
-                with open('image.png', 'wb') as fh:
-                    fh.write(graph.create_png())
-    ```
-
-
-## Creating a Service
-
-To define a service, simply subclass and fill in the methods
-to do stuff as the service is started/stopped etc.:
+To start a worker add this to your program:
 
 ```python
-    class MyService(Service):
-
-        async def on_start(self) -> None:
-            print('Im starting now')
-
-        async def on_started(self) -> None:
-            print('Im ready')
-
-        async def on_stop(self) -> None:
-            print('Im stopping now')
+if __name__ == '__main__':
+    from mode import Worker
+    Worker(Service(), loglevel="info").execute_from_commandline()
 ```
 
-To start the service, call ``await service.start()``:
+Then execute your program to start the worker:
 
-```python
-    await service.start()
+```sh
+$ python examples/tutorial.py
+[2018-03-27 15:47:12,159: INFO]: [^Worker]: Starting...
+[2018-03-27 15:47:12,160: INFO]: [^-AppService]: Starting...
+[2018-03-27 15:47:12,160: INFO]: [^--Websockets]: Starting...
+STARTING WEBSOCKET SERVER
+[2018-03-27 15:47:12,161: INFO]: [^--UserCache]: Starting...
+[2018-03-27 15:47:12,161: INFO]: [^--Webserver]: Starting...
+[2018-03-27 15:47:12,164: INFO]: [^--Webserver]: Serving on port 8000
+REMOVING EXPIRED USERS
+REMOVING EXPIRED USERS
 ```
 
-Or you can use ``mode.Worker`` (or a subclass of this) to start your
-services-based asyncio program from the console:
+To stop it hit `Control-c`:
 
-```python
-    if __name__ == '__main__':
-        import mode
-        worker = mode.Worker(
-            MyService(),
-            loglevel='INFO',
-            logfile=None,
-            daemon=False,
-        )
-        worker.execute_from_commandline()
+```sh
+[2018-03-27 15:55:08,084: INFO]: [^Worker]: Stopping on signal received...
+[2018-03-27 15:55:08,084: INFO]: [^Worker]: Stopping...
+[2018-03-27 15:55:08,084: INFO]: [^-AppService]: Stopping...
+[2018-03-27 15:55:08,084: INFO]: [^--UserCache]: Stopping...
+REMOVING EXPIRED USERS
+[2018-03-27 15:55:08,085: INFO]: [^Worker]: Gathering service tasks...
+[2018-03-27 15:55:08,085: INFO]: [^--UserCache]: -Stopped!
+[2018-03-27 15:55:08,085: INFO]: [^--Webserver]: Stopping...
+[2018-03-27 15:55:08,085: INFO]: [^Worker]: Gathering all futures...
+[2018-03-27 15:55:08,085: INFO]: [^--Webserver]: Closing server
+[2018-03-27 15:55:08,086: INFO]: [^--Webserver]: Waiting for server to close handle
+[2018-03-27 15:55:08,086: INFO]: [^--Webserver]: Shutting down web application
+[2018-03-27 15:55:08,086: INFO]: [^--Webserver]: Waiting for handler to shut down
+[2018-03-27 15:55:08,086: INFO]: [^--Webserver]: Cleanup
+[2018-03-27 15:55:08,086: INFO]: [^--Webserver]: -Stopped!
+[2018-03-27 15:55:08,086: INFO]: [^--Websockets]: Stopping...
+[2018-03-27 15:55:08,086: INFO]: [^--Websockets]: -Stopped!
+[2018-03-27 15:55:08,087: INFO]: [^-AppService]: -Stopped!
+[2018-03-27 15:55:08,087: INFO]: [^Worker]: -Stopped!
 ```
 
-## It's a Graph!
+### Beacons
 
-Services can start other services, coroutines, and background tasks.
+The `beacon` object that we pass to services keeps track of the services
+in a graph.
 
-1) Starting other services using ``add_dependency``:
+They are not strictly required, but can be used to visualize a running
+system, for example we can render it as a pretty graph.
 
-```python
-    class MyService(Service):
+This requires you to have the `pydot` library and GraphViz
+installed:
 
-        def __post_init__(self) -> None:
-           self.add_dependency(OtherService(loop=self.loop))
+```sh
+$ pip install pydot
 ```
 
-2) Start a list of services using ``on_init_dependencies``:
+Let's change the app service class to dump the graph to an image
+at startup:
+
 
 ```python
-    class MyService(Service):
+class AppService(Service):
 
-        def on_init_dependencies(self) -> None:
-            return [
-                ServiceA(loop=self.loop),
-                ServiceB(loop=self.loop),
-                ServiceC(loop=self.loop),
-            ]
-```
-
-3) Start a future/coroutine (that will be waited on to complete on stop):
-
-```python
-    class MyService(Service):
-
-        async def on_start(self) -> None:
-            self.add_future(self.my_coro())
-
-        async def my_coro(self) -> None:
-            print('Executing coroutine')
-```
-
-4) Start a background task:
-
-```python
-    class MyService(Service):
-
-        @Service.task
-        async def _my_coro(self) -> None:
-            print('Executing coroutine')
-```
-
-
-5) Start a background task that keeps running:
-
-```python
-    class MyService(Service):
-
-        @Service.task
-        async def _my_coro(self) -> None:
-            while not self.should_stop:
-                # NOTE: self.sleep will wait for one second, or
-                #       until service stopped/crashed.
-                await self.sleep(1.0)
-                print('Background thread waking up')
+    async def on_start(self) -> None:
+        print('APP STARTING')
+        import pydot
+        import io
+        o = io.StringIO()
+        beacon = self.app.beacon.root or self.app.beacon
+        beacon.as_graph().to_dot(o)
+        graph, = pydot.graph_from_dot_data(o.getvalue())
+        print('WRITING GRAPH TO image.png')
+        with open('image.png', 'wb') as fh:
+            fh.write(graph.create_png())
 ```

@@ -37,7 +37,7 @@ if sys.platform == "win32":
 else:
     TIME_MONOTONIC = time.monotonic
 
-#: Seconds can be expressed as float or :class:`~datetime.timedelta`,
+#: Seconds can be expressed as float or `~datetime.timedelta`,
 Seconds = Union[timedelta, float, str]
 
 
@@ -243,7 +243,7 @@ def rate_limit(
 
 @singledispatch
 def want_seconds(s: float) -> float:
-    """Convert :data:`Seconds` to float."""
+    """Convert `Seconds` to float."""
     return s
 
 
@@ -271,7 +271,7 @@ def humanize_seconds(
     For example, 60 becomes "1 minute", and 7200 becomes "2 hours".
 
     Arguments:
-        secs: Seconds to format (as :class:`float` or :class:`int`).
+        secs: Seconds to format (as `float` or `int`).
         prefix (str): can be used to add a preposition to the output
             (e.g., 'in' will give 'in 1 second', but add nothing to 'now').
         suffix (str): same as prefix, adds suffix unless 'now'.

@@ -1,4 +1,4 @@
-"""Implements thread-local stack using :class:`ContextVar` (:pep:`567`).
+"""Implements thread-local stack using `ContextVar` (:pep:`567`).
 
 This is a reimplementation of the local stack as used by Flask, Werkzeug,
 Celery, and other libraries to keep a thread-local stack of objects.

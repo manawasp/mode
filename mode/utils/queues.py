@@ -1,4 +1,4 @@
-"""Queue utilities - variations of :class:`asyncio.Queue`."""
+"""Queue utilities - variations of `asyncio.Queue`."""
 
 import asyncio
 import math
@@ -24,7 +24,7 @@ _T = TypeVar("_T")
 
 
 class FlowControlEvent:
-    """Manage flow control :class:`FlowControlQueue` instances.
+    """Manage flow control `FlowControlQueue` instances.
 
     The FlowControlEvent manages flow in one or many queue instances
     at the same time.
@@ -87,7 +87,7 @@ class FlowControlEvent:
         self._queues = WeakSet()
 
     def manage_queue(self, queue: "FlowControlQueue") -> None:
-        """Add :class:`FlowControlQueue` to be cleared on resume."""
+        """Add `FlowControlQueue` to be cleared on resume."""
         self._queues.add(queue)
 
     def suspend(self) -> None:
@@ -115,10 +115,10 @@ class FlowControlEvent:
 
 
 class FlowControlQueue(asyncio.Queue):
-    """:class:`asyncio.Queue` managed by :class:`FlowControlEvent`.
+    """`asyncio.Queue` managed by `FlowControlEvent`.
 
     See Also:
-        :class:`FlowControlEvent`.
+        `FlowControlEvent`.
     """
 
     pressure_high_ratio = 1.25  # divided by

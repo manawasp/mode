@@ -8,18 +8,14 @@ TOX ?= tox
 NOSETESTS ?= nosetests
 ICONV ?= iconv
 MYPY ?= mypy
-SPHINX2RST ?= sphinx2rst
 
 TESTDIR ?= t
-SPHINX_DIR ?= docs/
-SPHINX_BUILDDIR ?= "${SPHINX_DIR}/_build"
 README ?= README.rst
 README_SRC ?= "docs/templates/readme.txt"
 CONTRIBUTING ?= CONTRIBUTING.rst
 CONTRIBUTING_SRC ?= "docs/contributing.rst"
 COC ?= CODE_OF_CONDUCT.rst
 COC_SRC ?= "docs/includes/code-of-conduct.txt"
-SPHINX_HTMLDIR="${SPHINX_BUILDDIR}/html"
 DOCUMENTATION=Documentation
 
 all: help
@@ -55,19 +51,15 @@ release:
 
 . PHONY: deps-default
 deps-default:
-	$(PIP) install -U -r requirements/default.txt
-
-. PHONY: deps-dist
-deps-dist:
-	$(PIP) install -U -r requirements/dist.txt
+	$(PIP) install -U -e "."
 
 . PHONY: deps-docs
 deps-docs:
-	$(PIP) install -U -r requirements/docs.txt
+	$(PIP) install -U -r requirements-docs.txt
 
 . PHONY: deps-test
 deps-test:
-	$(PIP) install -U -r requirements/test.txt
+	$(PIP) install -U -r requirements-test.txt
 
 . PHONY: deps-extras
 deps-extras:
@@ -80,11 +72,14 @@ develop: deps-default deps-dist deps-docs deps-test deps-extras
 
 . PHONY: Documentation
 Documentation:
-	(cd "$(SPHINX_DIR)"; $(MAKE) html)
-	mv "$(SPHINX_HTMLDIR)" $(DOCUMENTATION)
+	mkdocs build
 
 . PHONY: docs
 docs: Documentation
+
+. PHONE: serve-docs
+serve-docs:
+	mkdocs serve
 
 clean-docs:
 	-rm -rf "$(SPHINX_BUILDDIR)"
@@ -94,33 +89,21 @@ ruff:
 
 lint: ruff apicheck readmecheck
 
-apicheck:
-	(cd "$(SPHINX_DIR)"; $(MAKE) apicheck)
-
 clean-readme:
 	-rm -f $(README)
 
 readmecheck:
 	$(ICONV) -f ascii -t ascii $(README) >/dev/null
 
-$(README):
-	$(SPHINX2RST) "$(README_SRC)" --ascii > $@
-
 readme: clean-readme $(README) readmecheck
 
 clean-contrib:
 	-rm -f "$(CONTRIBUTING)"
 
-$(CONTRIBUTING):
-	$(SPHINX2RST) "$(CONTRIBUTING_SRC)" > $@
-
 contrib: clean-contrib $(CONTRIBUTING)
 
 clean-coc:
 	-rm -f "$(COC)"
-
-$(COC):
-	$(SPHINX2RST) "$(COC_SRC)" > $@
 
 coc: clean-coc $(COC)
 
@@ -161,9 +144,4 @@ typecheck:
 .PHONY: requirements
 requirements:
 	$(PIP) install --upgrade pip;\
-	for f in `ls requirements/` ; do $(PIP) install -r requirements/$$f ; done
-
-.PHONY: clean-requirements
-clean-requirements:
-	pip freeze | xargs pip uninstall -y
-	$(MAKE) requirements
+	$(PIP) install -r requirements.txt

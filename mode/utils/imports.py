@@ -149,7 +149,7 @@ def _ensure_identifier(path: str, full: str) -> None:
 
 
 class ParsedSymbol(NamedTuple):
-    """Tuple returned by :func:`parse_symbol`."""
+    """Tuple returned by `parse_symbol`."""
 
     module_name: Optional[str]
     attribute_name: Optional[str]
@@ -162,7 +162,7 @@ def parse_symbol(
     strict_separator: str = ":",
     relative_separator: str = ".",
 ) -> ParsedSymbol:
-    """Parse :func:`symbol_by_name` argument into components.
+    """Parse `symbol_by_name` argument into components.
 
     Returns:
         ParsedSymbol: Tuple of ``(module_name, attribute_name)``
@@ -254,20 +254,19 @@ def symbol_by_name(
 
     Examples:
 
-        ```sh
-        >>> symbol_by_name('mazecache.backends.redis:RedisBackend')
-        <class 'mazecache.backends.redis.RedisBackend'>
+    ```sh
+    >>> symbol_by_name('mazecache.backends.redis:RedisBackend')
+    <class 'mazecache.backends.redis.RedisBackend'>
 
-        >>> symbol_by_name('default', {
-        ...     'default': 'mazecache.backends.redis:RedisBackend'})
-        <class 'mazecache.backends.redis.RedisBackend'>
+    >>> symbol_by_name('default', {
+    ...     'default': 'mazecache.backends.redis:RedisBackend'})
+    <class 'mazecache.backends.redis.RedisBackend'>
 
-        # Does not try to look up non-string names.
-        >>> from mazecache.backends.redis import RedisBackend
-        >>> symbol_by_name(RedisBackend) is RedisBackend
-        True
-        ```
-
+    # Does not try to look up non-string names.
+    >>> from mazecache.backends.redis import RedisBackend
+    >>> symbol_by_name(RedisBackend) is RedisBackend
+    True
+    ```
     """
     # This code was copied from kombu.utils.symbol_by_name
     imp = importlib.import_module if imp is None else imp
@@ -412,7 +411,7 @@ def import_from_cwd(
 
 
 def smart_import(path: str, imp: Any = None) -> Any:
-    """Import module if module, otherwise same as :func:`symbol_by_name`."""
+    """Import module if module, otherwise same as `symbol_by_name`."""
     imp = importlib.import_module if imp is None else imp
     if ":" in path:
         # Path includes attribute so can just jump

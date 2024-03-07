@@ -305,7 +305,7 @@ def formatter(fun: FormatterHandler) -> FormatterHandler:
 def formatter2(fun: FormatterHandler2) -> FormatterHandler2:
     """Register formatter for logging positional args.
 
-    Like :func:`formatter` but the handler accepts
+    Like `formatter` but the handler accepts
     two arguments instead of one: ``(arg, logrecord)``.
 
     Passing the log record as additional argument expands
@@ -333,7 +333,7 @@ class DefaultFormatter(logging.Formatter):
 class ExtensionFormatter(colorlog.TTYColoredFormatter):
     """Formatter that can register callbacks to format args.
 
-    Extends :pypi:`colorlog`.
+    Extends [`colorlog`](https://pypi.org/project/colorlog).
     """
 
     def __init__(self, stream: Optional[IO] = None, **kwargs: Any) -> None:
@@ -585,7 +585,7 @@ def cry(
 
 
 def print_task_name(task: asyncio.Task, file: IO) -> None:
-    """Print name of :class:`asyncio.Task` in tracebacks."""
+    """Print name of `asyncio.Task` in tracebacks."""
     coro = task._coro  # type: ignore
     wrapped = getattr(task, "__wrapped__", None)
     coro_name = getattr(coro, "__name__", None)
@@ -610,7 +610,7 @@ class LogMessage(NamedTuple):
 
 
 class flight_recorder(ContextManager, LogSeverityMixin):
-    """Flight Recorder context for use with :keyword:`with` statement.
+    """Flight Recorder context for use with `with` statement.
 
     This is a logging utility to log stuff only when something
     times out.
@@ -650,7 +650,7 @@ class flight_recorder(ContextManager, LogSeverityMixin):
                 on_timeout.info(f'-redis_client.get({POSTS_KEY!r})')
     ```
 
-    If the body of this :keyword:`with` statement completes before the
+    If the body of this `with` statement completes before the
     timeout, the logs are forgotten about and never emitted -- if it
     takes more than ten seconds to complete, we will see these messages
     in the log:
@@ -863,7 +863,7 @@ class FileLogProxy(TextIO):
 
     def _safewrap_handler(self, handler: logging.Handler) -> None:
         # Make the logger handlers dump internal errors to
-        # :data:`sys.__stderr__` instead of :data:`sys.stderr` to circumvent
+        # `sys.__stderr__` instead of `sys.stderr` to circumvent
         # infinite loops.
         class WithSafeHandleError(logging.Handler):
             def handleError(self, record: logging.LogRecord) -> None:
@@ -983,7 +983,7 @@ def redirect_stdouts(
     stdout: bool = True,
     stderr: bool = True,
 ) -> Iterator[FileLogProxy]:
-    """Redirect :data:`sys.stdout` and :data:`sys.stdout` to logger."""
+    """Redirect `sys.stdout` and `sys.stdout` to logger."""
     proxy = FileLogProxy(logger, severity=severity)
     if stdout:
         sys.stdout = proxy

@@ -36,7 +36,7 @@ class IN:
 
 @contextmanager
 def patch_module(*names: str, new_callable: Any = MagicMock) -> Iterator:
-    """Mock one or modules such that every attribute is a :class:`Mock`."""
+    """Mock one or modules such that every attribute is a `Mock`."""
     prev = {}
 
     class MockModule(types.ModuleType):

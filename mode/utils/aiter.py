@@ -112,7 +112,7 @@ class _ARangeIterator(AsyncIterator[int]):
 
 
 class arange(AsyncIterable[int]):
-    """Async generator that counts like :class:`range`."""
+    """Async generator that counts like `range`."""
 
     def __init__(
         self, *slice_args: Optional[int], **slice_kwargs: Optional[int]
