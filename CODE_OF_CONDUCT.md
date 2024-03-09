@@ -1,5 +1,4 @@
-Code of Conduct
-===============
+# Code of Conduct
 
 Everyone interacting in the project's codebases, issue trackers, chat rooms,
 and mailing lists is expected to follow the Mode Code of Conduct.

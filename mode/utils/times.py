@@ -283,9 +283,7 @@ def humanize_seconds(
     for unit, divider, formatter in TIME_UNITS:
         if secs >= divider:
             w = secs / float(divider)
-            return "{}{}{} {}{}".format(
-                prefix, sep, formatter(w), pluralize(int(w), unit), suffix
-            )
+            return f"{prefix}{sep}{formatter(w)} {pluralize(int(w), unit)}{suffix}"
     if microseconds and secs > 0.0:
         return f"{prefix}{sep}{secs:.2f} seconds{suffix}"
     return now

@@ -7,6 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mode-streaming"
+version = "0.3.5"
 description = "AsyncIO Service-based programming"
 readme = "README.rst"
 requires-python = ">=3.8"
@@ -37,7 +38,6 @@ dependencies = [
     "croniter>=2.0.0,<3.0.0",
     "mypy_extensions",
 ]
-dynamic = ["version"]
 
 [project.optional-dependencies]
 eventlet = [
@@ -45,7 +45,7 @@ eventlet = [
     "dnspython",
 ]
 gevent = [
-    "aiogevent~=0.2",
+    "asyncio-gevent~=0.2",
 ]
 uvloop = [
     "uvloop>=0.19.0",
@@ -211,3 +211,6 @@ skip-magic-trailing-comma = true
 quote-style = "double"
 indent-style = "space"
 line-ending = "auto"
+
+[tool.commitizen]
+version_provider = "pep621"
