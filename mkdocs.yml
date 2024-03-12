@@ -32,8 +32,13 @@ repo_url: https://github.com/faust-streaming/mode
 
 nav:
   - Mode:
-    - Introduction: 'index.md'
-    - Creating a Service: 'creating-service.md'
+    - Introduction: index.md
+    - Creating a Service: creating-service.md
+    - Examples:
+      - Service: example-service.md
+      - Web app: example-webapp.md
+    - Developing:
+      - Contributing Guide: contributing.md
   - References:
     - 'Mode':
       - mode.services: references/mode.services.md
@@ -78,6 +83,7 @@ nav:
       - mode.utils.trees: references/mode.utils.trees.md
       - mode.utils.types.graphs: references/mode.utils.types.graphs.md
       - mode.utils.types.trees: references/mode.utils.types.trees.md
+  - Changelog: changelog.md
 markdown_extensions:
   - pymdownx.highlight
   - pymdownx.inlinehilite
