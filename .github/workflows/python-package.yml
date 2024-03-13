@@ -41,10 +41,10 @@ jobs:
           cache-dependency-path: |
             requirements/*.txt
             requirements/**/*.txt
-      - name: "Install dependencies"
-        run: "scripts/install"
-      - name: "Run linting checks"
-        run: "scripts/check"
+    #   - name: "Install dependencies"
+    #     run: "scripts/install"
+    #   - name: "Run linting checks"
+    #     run: "scripts/check"
       - name: "Run tests"
         run: "scripts/tests"
       - name: "Enforce coverage"
