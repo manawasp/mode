@@ -7,14 +7,13 @@
 import re
 import sys
 import typing
-from importlib.metadata import version
 
 # Lazy loading.
 # - See werkzeug/__init__.py for the rationale behind this.
 from types import ModuleType
 from typing import Any, Mapping, NamedTuple, Sequence
 
-__version__ = version("mode-streaming")
+__version__ = "0.0.1"
 __author__ = "Faust Streaming"
 __contact__ = "vpatki@wayfair.com, williambbarnhart@gmail.com"
 __homepage__ = "https://github.com/faust-streaming/mode"
