@@ -46,7 +46,7 @@ jobs:
             pyproject.toml
 
       - name: Install dependencies
-        run: scripts/install.sh
+        run: pip install -r requirements.txt
 
       - name: Run linting checks
         run: scripts/lint.sh

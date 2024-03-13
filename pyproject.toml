@@ -1,15 +1,18 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.package-data]
 "modeStreaming" = ["py.typed"]
 
+[tool.distutils.bdist_wheel]
+universal = true
+
 [project]
 name = "mode-streaming"
 version = "0.3.5"
 description = "AsyncIO Service-based programming"
-readme = "README.rst"
+readme = "README.md"
 requires-python = ">=3.8"
 keywords = ["asyncio", "service", "bootsteps", "graph", "coroutine"]
 authors = [

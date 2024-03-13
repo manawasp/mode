@@ -1,4 +1,4 @@
-# This is code for the tutorial in README.rst
+# This is code for the tutorial in README.md
 from typing import Any, List, MutableMapping
 
 from aiohttp.web import Application
