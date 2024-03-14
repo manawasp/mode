@@ -19,6 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version:
+          - "pypy3.9"
           - "pypy3.10"
           - "3.8"
           - "3.9"
@@ -45,6 +46,9 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Install for testing
+        run: pip install -e .
 
       - name: Run linting checks
         run: scripts/lint.sh
