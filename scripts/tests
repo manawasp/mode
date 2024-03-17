@@ -7,5 +7,18 @@ fi
 
 set -ex
 
+# if [ -z $GITHUB_ACTIONS ]; then
+#     scripts/check
+# fi
 
-${PREFIX}pytest tests --cov=mode
+${PREFIX}pytest tests/unit tests/functional
+
+# if [ -z $GITHUB_ACTIONS ]; then
+#     scripts/coverage
+# fi
+# #!/usr/bin/env bash
+
+# set -e
+# set -x
+
+# pytest tests --cov=mode
