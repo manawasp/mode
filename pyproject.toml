@@ -69,7 +69,7 @@ testpaths = [
 
 [tool.coverage.run]
 parallel = true
-# context = '${CONTEXT}'
+context = '${CONTEXT}'
 source = [
     "mode",
     "tests/*"
