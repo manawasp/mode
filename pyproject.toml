@@ -91,17 +91,17 @@ omit = [
 ]
 branch = true
 
-# [tool.coverage.report]
-# exclude_lines = [
-#     "pragma: no cover",
-#     "@abstractmethod",
-#     "@abc.abstractmethod",
-#     "if sys.platform == 'win32':",
-#     "if typing.TYPE_CHECKING:",
-#     "if TYPE_CHECKING:"
-# ]
-# fail_under = 93
-# show_missing = true
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "@abstractmethod",
+    "@abc.abstractmethod",
+    "if sys.platform == 'win32':",
+    "if typing.TYPE_CHECKING:",
+    "if TYPE_CHECKING:"
+]
+fail_under = 93
+show_missing = true
 
 [tool.mypy]
 # --strict but not --implicit-optional
