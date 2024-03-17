@@ -1,8 +1,8 @@
 [run]
 branch = 1
-cover_pylib = 0
-include=*mode/*
-omit = tests.*
+# cover_pylib = 0
+# include=*mode/*
+# omit = tests.*
 
 [report]
 omit =
