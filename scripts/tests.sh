@@ -7,4 +7,4 @@ fi
 
 set -ex
 
-${PREFIX}pytest tests/unit tests/functional --cov=mode
+${PREFIX}pytest tests/unit tests/functional
