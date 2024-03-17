@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 export PREFIX=""
 if [ -d 'venv' ] ; then
@@ -6,5 +6,6 @@ if [ -d 'venv' ] ; then
 fi
 
 set -ex
+
 
 ${PREFIX}pytest tests --cov=mode
