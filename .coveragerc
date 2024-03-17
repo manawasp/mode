@@ -6,8 +6,8 @@ omit = tests.*
 
 [report]
 omit =
-    */python?.?/*
-    */site-packages/*
+    # */python?.?/*
+    # */site-packages/*
     # */pypy/*
 
     # tested by functional tests
