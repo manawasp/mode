@@ -70,25 +70,25 @@ testpaths = [
 [tool.coverage.run]
 # parallel = true
 # context = '${CONTEXT}'
-# source = [
-#     "mode",
-#     "tests/*"
-# ]
-# omit = [
-#     "venv/*",
-#     "tests/*",
+source = [
+    "mode",
+    "tests/*"
+]
+omit = [
+    "venv/*",
+    "tests/*",
 
-#     # tested by functional tests
-#     "mode/loop/*",
+    # tested by functional tests
+    "mode/loop/*",
 
-#     # not needed
-#     "mode/types/*",
-#     "mode/utils/types/*",
-#     "mode/utils/mocks.py",
+    # not needed
+    "mode/types/*",
+    "mode/utils/types/*",
+    "mode/utils/mocks.py",
 
-#     # been in celery since forever
-#     "mode/utils/graphs/*",
-# ]
+    # been in celery since forever
+    "mode/utils/graphs/*",
+]
 branch = true
 
 # [tool.coverage.report]
