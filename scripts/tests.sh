@@ -3,4 +3,4 @@
 set -e
 set -x
 
-pytest tests --cov=mode
+pytest tests/unit tests/functional --cov=mode
