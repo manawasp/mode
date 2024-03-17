@@ -11,12 +11,12 @@ omit =
     # */pypy/*
 
     # tested by functional tests
-    */mode/loop/*
+    # */mode/loop/*
 
     # not needed
-    */mode/types/*
-    */mode/utils/types/*
-    */mode/utils/mocks.py
+    # */mode/types/*
+    # */mode/utils/types/*
+    # */mode/utils/mocks.py
 
     # been in celery since forever
     */mode/utils/graphs/*
@@ -26,10 +26,10 @@ exclude_lines =
 
     pragma: no cover
 
-    if sys.platform == 'win32':
+    # if sys.platform == 'win32':
 
-    \@abc\.abstractmethod
+    # \@abc\.abstractmethod
 
-    \# Py3\.6
+    # \# Py3\.6
 
-    \@overload
+    # \@overload
