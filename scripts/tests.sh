@@ -1,6 +1,10 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-set -e
-set -x
+export PREFIX=""
+if [ -d 'venv' ] ; then
+    export PREFIX="venv/bin/"
+fi
 
-pytest tests/unit tests/functional --cov=mode
+set -ex
+
+${PREFIX}pytest tests/unit tests/functional --cov=mode
