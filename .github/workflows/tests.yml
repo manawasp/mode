@@ -46,8 +46,8 @@ jobs:
         run: pip install -r requirements.txt
     #   - name: "Run linting checks"
     #     run: "scripts/check"
-      - name: "Run tests"
-        run: "scripts/tests"
+      - name: Run tests
+        run: scripts/tests.sh
       - name: "Enforce coverage"
         uses: codecov/codecov-action@v4
         with:
