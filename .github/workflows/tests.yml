@@ -43,7 +43,7 @@ jobs:
             requirements-tests.txt
             pyproject.toml
       - name: "Install dependencies"
-        run: "scripts/install"
+        run: pip install -r requirements.txt
     #   - name: "Run linting checks"
     #     run: "scripts/check"
       - name: "Run tests"
