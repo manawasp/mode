@@ -84,6 +84,7 @@ Session.vim
 tags
 .pytest_cache/
 .ipython/
+.ruff_cache/
 
 ### PyCharm
 .idea

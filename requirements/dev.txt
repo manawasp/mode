@@ -1,4 +1,0 @@
-ruff
-mypy
-yarl
-pre-commit
