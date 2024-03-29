@@ -1,19 +1,11 @@
 # AsyncIO Services Fork
 
-<p>
-    <a href="https://pypi.python.org/pypi/mode-streaming/" target="_blank">
-        <img src="https://img.shields.io/pypi/v/mode-streaming.svg" alt="Latest release">
-    </a>
-    <a href="https://codecov.io/github/faust-streaming/mode?branch=master" target="_blank">
-        <img src="https://codecov.io/github/faust-streaming/mode/coverage.svg?branch=master" alt="Coverage">
-    </a>
-    <a href="https://opensource.org/licenses/BSD-3-Clause" target="_blank">
-        <img src="https://img.shields.io/pypi/l/mode-streaming.svg" alt="BSD License">
-    </a>
-    <a href="http://pypi.org/project/mode-streaming/" target="_blank">
-        <img src="https://img.shields.io/pypi/pyversions/mode-streaming.svg" alt="Supported Python versions">
-    </a>
-</p>
+![python versions](https://img.shields.io/pypi/pyversions/mode-streaming.svg)
+![implementation](https://img.shields.io/pypi/implementation/mode-streaming)
+![version](https://img.shields.io/pypi/v/mode-streaming)
+![license](https://img.shields.io/pypi/l/mode-streaming)
+![downloads](https://img.shields.io/pypi/dw/mode-streaming)
+
 
 ---
 
