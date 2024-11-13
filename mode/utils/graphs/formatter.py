@@ -1,6 +1,7 @@
 """Formatting graphs."""
 
-from typing import Any, ClassVar, Dict, Mapping, Optional
+from collections.abc import Mapping
+from typing import Any, ClassVar, Optional
 
 from mode.utils.objects import label
 from mode.utils.types.graphs import _T, GraphFormatterT
@@ -29,7 +30,7 @@ class DOT:
     NODE = '{INp}"{0}" [{attrs}]'
     EDGE = '{INp}"{0}" {dir} "{1}" [{attrs}]'
     ATTRSEP = ", "
-    DIRS: ClassVar[Dict] = {"graph": "--", "digraph": "->"}
+    DIRS: ClassVar[dict] = {"graph": "--", "digraph": "->"}
     TAIL = "{IN}}}"
 
 
@@ -42,7 +43,7 @@ class GraphFormatter(GraphFormatterT):
     _head = DOT.HEAD.strip()
     _tail = DOT.TAIL.strip()
     _attrsep = DOT.ATTRSEP
-    _dirs: ClassVar[Dict] = dict(DOT.DIRS)
+    _dirs: ClassVar[dict] = dict(DOT.DIRS)
 
     scheme: Mapping[str, Any] = {
         "shape": "box",

@@ -2,21 +2,10 @@
 
 import asyncio
 from collections import defaultdict
+from collections.abc import Iterable, Mapping, MutableSet
 from functools import partial
 from types import MethodType
-from typing import (
-    Any,
-    Callable,
-    Iterable,
-    Mapping,
-    MutableSet,
-    Optional,
-    Set,
-    Tuple,
-    Type,
-    cast,
-    no_type_check,
-)
+from typing import Any, Callable, Optional, cast, no_type_check
 from weakref import ReferenceType, WeakMethod, ref
 
 from .types.signals import (
@@ -44,7 +33,7 @@ class BaseSignal(BaseSignalT[T]):
         self,
         *,
         name: Optional[str] = None,
-        owner: Optional[Type] = None,
+        owner: Optional[type] = None,
         loop: Optional[asyncio.AbstractEventLoop] = None,
         default_sender: Any = None,
         receivers: Optional[MutableSet[SignalHandlerRefT]] = None,
@@ -85,7 +74,7 @@ class BaseSignal(BaseSignalT[T]):
             filter_receivers=self._filter_receivers,
         )
 
-    def __set_name__(self, owner: Type, name: str) -> None:
+    def __set_name__(self, owner: type, name: str) -> None:
         """If signal is an attribute of a class, we use __set_name__ to show the location of the signal in __repr__.
 
         Examples:
@@ -102,7 +91,7 @@ class BaseSignal(BaseSignalT[T]):
             self.name = name
         self.owner = owner
 
-    def unpack_sender_from_args(self, *args: Any) -> Tuple[T, Tuple[Any, ...]]:
+    def unpack_sender_from_args(self, *args: Any) -> tuple[T, tuple[Any, ...]]:
         sender = self.default_sender
         if sender is None:
             if not args:
@@ -157,7 +146,7 @@ class BaseSignal(BaseSignalT[T]):
 
     def _update_receivers(
         self, r: MutableSet[SignalHandlerRefT]
-    ) -> Set[SignalHandlerT]:
+    ) -> set[SignalHandlerT]:
         live_receivers, dead_refs = self._get_live_receivers(r)
         for href in dead_refs:
             r.discard(href)
@@ -165,9 +154,9 @@ class BaseSignal(BaseSignalT[T]):
 
     def _get_live_receivers(
         self, r: MutableSet[SignalHandlerRefT]
-    ) -> Tuple[Set[SignalHandlerT], Set[SignalHandlerRefT]]:
-        live_receivers: Set[SignalHandlerT] = set()
-        dead_refs: Set[SignalHandlerRefT] = set()
+    ) -> tuple[set[SignalHandlerT], set[SignalHandlerRefT]]:
+        live_receivers: set[SignalHandlerT] = set()
+        dead_refs: set[SignalHandlerRefT] = set()
         for href in r:
             alive, value = self._is_alive(href)
             if alive and value is not None:
@@ -178,7 +167,7 @@ class BaseSignal(BaseSignalT[T]):
 
     def _is_alive(
         self, ref: SignalHandlerRefT
-    ) -> Tuple[bool, Optional[SignalHandlerT]]:
+    ) -> tuple[bool, Optional[SignalHandlerT]]:
         if isinstance(ref, ReferenceType):
             value = ref()
             return value is not None, value

@@ -5,21 +5,21 @@ import os
 import sys
 import typing
 import warnings
+from collections.abc import (
+    Generator,
+    Iterable,
+    Iterator,
+    Mapping,
+    MutableMapping,
+)
 from contextlib import contextmanager, suppress
 from types import ModuleType
 from typing import (
     Any,
     Callable,
-    Generator,
     Generic,
-    Iterable,
-    Iterator,
-    Mapping,
-    MutableMapping,
     NamedTuple,
     Optional,
-    Set,
-    Type,
     TypeVar,
     Union,
     cast,
@@ -85,7 +85,7 @@ class FactoryMapping(FastUserDict, Generic[_T]):
     """
 
     aliases: MutableMapping[str, str]
-    namespaces: Set
+    namespaces: set
     _finalized: bool = False
 
     def __init__(self, *args: Mapping, **kwargs: str) -> None:
@@ -305,7 +305,7 @@ def symbol_by_name(
 
 class EntrypointExtension(NamedTuple):
     name: str
-    type: Type
+    type: type
 
 
 class RawEntrypointExtension(NamedTuple):
@@ -336,7 +336,7 @@ def load_extension_classes(namespace: str) -> Iterable[EntrypointExtension]:
     """
     for name, cls_name in load_extension_class_names(namespace):
         try:
-            cls: Type = symbol_by_name(cls_name)
+            cls: type = symbol_by_name(cls_name)
         except (ImportError, SyntaxError) as exc:
             warnings.warn(
                 f"Cannot load {namespace} extension {cls_name!r}: {exc!r}",

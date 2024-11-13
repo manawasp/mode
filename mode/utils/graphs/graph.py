@@ -1,21 +1,15 @@
 """Data structure: Dependency graph."""
 
-from functools import partial
-from typing import (
-    IO,
-    Any,
-    Callable,
-    Counter,
+from collections import Counter
+from collections.abc import (
     ItemsView,
     Iterable,
     Iterator,
-    List,
     MutableMapping,
-    Optional,
     Sequence,
-    Set,
-    cast,
 )
+from functools import partial
+from typing import IO, Any, Callable, Optional, cast
 
 from mode.utils.types.graphs import _T, DependencyGraphT, GraphFormatterT
 
@@ -141,9 +135,9 @@ class DependencyGraph(DependencyGraphT):
         See Also:
             :wikipedia:`Tarjan%27s_strongly_connected_components_algorithm`
         """
-        result: List = []
-        stack: List = []
-        low: List = []
+        result: list = []
+        stack: list = []
+        low: list = []
 
         def visit(node: Any) -> None:
             if node in low:
@@ -177,7 +171,7 @@ class DependencyGraph(DependencyGraphT):
             formatter (celery.utils.graph.GraphFormatter): Custom graph
                 formatter to use.
         """
-        seen: Set = set()
+        seen: set = set()
         draw = formatter or self.formatter
         write = partial(print, file=fh)
 

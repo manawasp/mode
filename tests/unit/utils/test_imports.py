@@ -21,7 +21,7 @@ from mode.utils.mocks import mask_module
 
 
 class test_FactoryMapping:
-    @pytest.fixture()
+    @pytest.fixture
     def map(self):
         return FactoryMapping(
             {
@@ -107,7 +107,7 @@ def test__ensure_identifier():
 
 
 class test_symbol_by_name:
-    @pytest.fixture()
+    @pytest.fixture
     def imp(self):
         return Mock(name="imp")
 
