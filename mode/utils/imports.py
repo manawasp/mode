@@ -25,6 +25,12 @@ from typing import (
     cast,
 )
 
+try:
+    from importlib.metadata import entry_points  # Python >= 3.10
+except ImportError:
+    from importlib_metadata import entry_points  # type: ignore # Python < 3.10
+
+
 from .collections import FastUserDict
 from .objects import cached_property
 from .text import didyoumean
@@ -367,12 +373,7 @@ def load_extension_class_names(
     [('msgpack', 'faust_msgpack:msgpack')]
     ```
     """
-    try:
-        from pkg_resources import iter_entry_points
-    except ImportError:
-        return
-
-    for ep in iter_entry_points(namespace):
+    for ep in entry_points(group=namespace):
         yield RawEntrypointExtension(
             ep.name, ":".join([ep.module_name, ep.attrs[0]])
         )

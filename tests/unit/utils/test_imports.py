@@ -186,7 +186,7 @@ def test_load_extension_class_names():
 
 @contextmanager
 def patch_iter_entry_points():
-    with patch("pkg_resources.iter_entry_points") as iter_entry_points:
+    with patch("mode.utils.imports.entry_points") as entry_points:
         ep1 = Mock(name="ep1")
         ep1.name = "ep1"
         ep1.module_name = "foo"
@@ -195,7 +195,7 @@ def patch_iter_entry_points():
         ep2.name = "ep2"
         ep2.module_name = "bar"
         ep2.attrs = ["c", "d"]
-        iter_entry_points.return_value = [ep1, ep2]
+        entry_points.return_value = (ep1, ep2)
         yield
 
 
