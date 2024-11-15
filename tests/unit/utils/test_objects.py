@@ -3,7 +3,7 @@ import collections.abc
 import pickle
 import typing
 from collections.abc import Mapping, MutableMapping, MutableSet, Sequence, Set
-from typing import ClassVar, Generic, Optional, Union
+from typing import ClassVar, Optional, Union
 from unittest.mock import ANY, Mock
 
 import pytest
@@ -59,7 +59,6 @@ class A(B): ...
             (
                 [
                     ServiceCallbacks,
-                    Generic,
                     *EXTRA_GENERIC_INHERITS_FROM,
                     ANY,
                     ServiceT,
